@@ -38,7 +38,10 @@ submodule. From your project's root directory, do the following:
 
 .. code-block::
 
-    git submodule add --branch=v1.00 -- https://gitlab.com/btmcg/nrmake.git
+    git submodule add -- https://gitlab.com/btmcg/nrmake.git
+    cd nrmake
+    git checkout --branch=v1.00
+    cd ..
     cp nrmake/example_makefile Makefile
 
 Then add ``Module.mk`` files to the directory of each executable or
