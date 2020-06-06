@@ -27,7 +27,7 @@ example ``Module.mk``
 This builds an executable with the same name as the directory and puts
 it in the ``<root>/bin`` directory. For documentation on how to provide
 individual ``CPPFLAGS``, ``LDFLAGS``, ``CXXFLAGS``, etc., see
-``mk/module_example.mk``.
+``nrmake/module_example.mk``.
 
 
 how to use nrmake in your project
@@ -40,7 +40,7 @@ submodule. From your project's root directory, do the following:
 
     git submodule add -- https://gitlab.com/btmcg/nrmake.git
     cd nrmake
-    git checkout --branch=v1.00
+    git checkout -b v1.00
     cd ..
     cp nrmake/example_makefile Makefile
 

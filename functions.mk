@@ -303,7 +303,7 @@ build-internal-dependencies =\
 # ----------------------------------------------------------------------
 build-object-rules =\
   $(foreach source,$(__modules.$1.LOCAL_SOURCE_FILES),\
-    $(eval $(call convert-c-cpp-suffix-to,$(source),o): $(source) Makefile mk/env.mk mk/functions.mk mk/pattern_rules.mk mk/third_party.mk)\
+    $(eval $(call convert-c-cpp-suffix-to,$(source),o): $(source) Makefile nrmake/env.mk nrmake/functions.mk nrmake/pattern_rules.mk nrmake/third_party.mk)\
     $(eval $(call convert-c-cpp-suffix-to,$(source),o): $(__modules.$1.LOCAL_PATH)/Module.mk)\
     $(eval $(call convert-c-cpp-suffix-to,$(source),o): __local_cflags := $$(__modules.$1.LOCAL_CFLAGS))\
     $(eval $(call convert-c-cpp-suffix-to,$(source),o): __local_cppflags := $$(__modules.$1.LOCAL_CPPFLAGS))\
