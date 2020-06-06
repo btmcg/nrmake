@@ -133,4 +133,4 @@ ifeq (,$(findstring $(COMPILER),gcc clang))
   $(error "Invalid value COMPILER=$(COMPILER), must be either 'gcc' or 'clang'")
 endif
 
-include mk/env_$(COMPILER).mk
+include nrmake/env_$(COMPILER).mk
