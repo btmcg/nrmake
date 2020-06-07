@@ -47,7 +47,8 @@ submodule. From your project's root directory, do the following:
 Then add ``Module.mk`` files to the directory of each executable or
 library you would like to build. See the example one-line file cited
 above or use `nrmake-example
-<https://gitlab.com/btmcg/nrmake-example.git>`_ as an example.
+<https://gitlab.com/btmcg/nrmake-example.git>`_ as an example. A
+description of all supported variables are listed in module_example.mk.
 
 
 project structure
