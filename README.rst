@@ -178,6 +178,7 @@ catch is best included as a submodule with your project's test code in
     git submodule add -- https://github.com/catchorg/Catch2.git third_party/catch2/2.12.2
     cd third_party/catch2/2.12.2
     git checkout -b v2.12.2
+    cd -
     vim nrmake/third_party.mk
 
 google-benchmark
