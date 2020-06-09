@@ -13,9 +13,9 @@ FMT := third_party/fmt/6.2.1
 use-fmt = $(eval LOCAL_CPPFLAGS += -DFMT_HEADER_ONLY -isystem$(FMT)/include)
 
 ifeq ($(COMPILER),gcc)
-  GOOGLE_BENCHMARK := third_party/google-benchmark-gcc/1.5.0
+  GOOGLE_BENCHMARK := third_party/google-benchmark-gcc/1.5.1
 else
-  GOOGLE_BENCHMARK := third_party/google-benchmark-clang/1.5.0
+  GOOGLE_BENCHMARK := third_party/google-benchmark-clang/1.5.1
 endif
 use-google-benchmark =\
   $(eval LOCAL_CPPFLAGS += -isystem$(GOOGLE_BENCHMARK)/include)\
