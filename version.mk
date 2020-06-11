@@ -14,6 +14,7 @@ $(VERSION_FILE): .git/HEAD .git/index
 # make sure the file is a dependency of all targets, so it is always
 # built and there aren't any include errors
 all: $(VERSION_FILE)
+tidy: $(VERSION_FILE)
 $(foreach module,$(call get-all-modules), \
   $(eval $(module): $(VERSION_FILE)) \
 )
