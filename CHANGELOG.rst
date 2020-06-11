@@ -2,6 +2,8 @@
 ------------------
 
 * Add ``VERSION_FILE`` as a dependency to ``tidy`` target
+* Write ``VERSION_FILE`` in a single ``sh`` command to avoid
+  race-conditions
 
 
 1.0.0 - 2020-06-09
