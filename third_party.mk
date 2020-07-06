@@ -9,7 +9,7 @@
 CATCH := third_party/catch2/2.12.3/single_include
 use-catch = $(eval LOCAL_CPPFLAGS += -isystem$(CATCH))
 
-FMT := third_party/fmt/6.2.1
+FMT := third_party/fmt/7.0.0
 use-fmt = $(eval LOCAL_CPPFLAGS += -DFMT_HEADER_ONLY -isystem$(FMT)/include)
 
 ifeq ($(COMPILER),gcc)
