@@ -5,19 +5,19 @@
 
 # module-specific variables
 # ----------------------------------------------------------------------
-modules-LOCALS := \
-  LOCAL_CFLAGS \
-  LOCAL_CPPFLAGS \
-  LOCAL_CXXFLAGS \
-  LOCAL_DEPS \
-  LOCAL_LDFLAGS \
-  LOCAL_LDLIBS \
-  LOCAL_LIBRARIES \
-  LOCAL_MODULE \
-  LOCAL_OBJS \
-  LOCAL_PATH \
-  LOCAL_SOURCE_FILES \
-  LOCAL_TARGET
+modules-locals := \
+  MODULE_CFLAGS \
+  MODULE_CPPFLAGS \
+  MODULE_CXXFLAGS \
+  MODULE_DEPS \
+  MODULE_LDFLAGS \
+  MODULE_LDLIBS \
+  MODULE_LIBRARIES \
+  MODULE_MODULE \
+  MODULE_OBJS \
+  MODULE_PATH \
+  MODULE_SOURCE_FILES \
+  MODULE_TARGET
 
 
 # ----------------------------------------------------------------------
@@ -68,11 +68,11 @@ uniq = $(if $1,$(firstword $1) $(call uniq,$(filter-out $(firstword $1),$1)))
 # function : clear-vars
 # returns  : nothing
 # usage    : $(call clear-vars)
-# rationale: undefines all LOCAL* variables
+# rationale: undefines all MODULE_* variables
 # note     : undefine was added in GNU Make v3.82
 # ----------------------------------------------------------------------
 clear-vars =\
-  $(foreach var,$(modules-LOCALS),\
+  $(foreach var,$(modules-locals),\
     $(eval undefine $(var))\
   )
 
@@ -109,11 +109,11 @@ convert-c-cpp-suffix-to =\
 
 # ----------------------------------------------------------------------
 # function : get-all-deps
-# returns  : every module's LOCAL_DEPS
+# returns  : every module's MODULE_DEPS
 # usage    : $(call get-all-deps)
 # ----------------------------------------------------------------------
 get-all-deps =\
-  $(foreach module,$(__all_modules),$(__modules.$(module).LOCAL_DEPS))
+  $(foreach module,$(__all_modules),$(__modules.$(module).MODULE_DEPS))
 
 
 # ----------------------------------------------------------------------
@@ -128,20 +128,20 @@ get-all-modules = $(__all_modules)
 
 # ----------------------------------------------------------------------
 # function : get-all-objs
-# returns  : every module's LOCAL_OBJS
+# returns  : every module's MODULE_OBJS
 # usage    : $(call get-all-objs)
 # ----------------------------------------------------------------------
 get-all-objs =\
-  $(foreach module,$(__all_modules),$(__modules.$(module).LOCAL_OBJS))
+  $(foreach module,$(__all_modules),$(__modules.$(module).MODULE_OBJS))
 
 
 # ----------------------------------------------------------------------
 # function : get-all-targets
-# returns  : every module's LOCAL_TARGET
+# returns  : every module's MODULE_TARGET
 # usage    : $(call get-all-targets)
 # ----------------------------------------------------------------------
 get-all-targets =\
-  $(foreach module,$(__all_modules),$(__modules.$(module).LOCAL_TARGET))
+  $(foreach module,$(__all_modules),$(__modules.$(module).MODULE_TARGET))
 
 
 # ----------------------------------------------------------------------
@@ -167,14 +167,14 @@ load-modules =\
 # usage    : $(call add-executable-module)
 # rationale: used in Module.mk files to add an executable target to the
 #            build system
-# note     : this function requires LOCAL_PATH to be set by caller
+# note     : this function requires MODULE_PATH to be set by caller
 # ----------------------------------------------------------------------
 add-executable-module =\
-  $(eval LOCAL_PATH := $1)\
-  $(eval LOCAL_MODULE ?= $(notdir $(LOCAL_PATH)))\
-  $(eval __modules.$(LOCAL_MODULE).LOCAL_TARGET := $(LOCAL_PATH)/$(LOCAL_MODULE))\
-  $(eval __modules.$(LOCAL_MODULE).LOCAL_TYPE   := executable)\
-  $(call _add-module,$(LOCAL_MODULE))
+  $(eval MODULE_PATH := $1)\
+  $(eval MODULE_MODULE ?= $(notdir $(MODULE_PATH)))\
+  $(eval __modules.$(MODULE_MODULE).MODULE_TARGET := $(MODULE_PATH)/$(MODULE_MODULE))\
+  $(eval __modules.$(MODULE_MODULE).MODULE_TYPE   := executable)\
+  $(call _add-module,$(MODULE_MODULE))
 
 
 # ----------------------------------------------------------------------
@@ -184,16 +184,16 @@ add-executable-module =\
 # usage    : $(call add-shared-library-module)
 # rationale: used in Module.mk files to add a shared library target to
 #            the build system
-# note     : this function requires LOCAL_PATH to be set by caller
+# note     : this function requires MODULE_PATH to be set by caller
 # ----------------------------------------------------------------------
 add-shared-library-module =\
-  $(eval LOCAL_PATH := $1)\
-  $(eval LOCAL_MODULE ?= $(notdir $(LOCAL_PATH)))\
-  $(eval __modules.$(LOCAL_MODULE).LOCAL_TARGET := $(LOCAL_PATH)/lib$(LOCAL_MODULE).so)\
-  $(eval __modules.$(LOCAL_MODULE).LOCAL_TYPE   := shared_library)\
-  $(eval __modules.$(LOCAL_MODULE).LOCAL_CPPFLAGS += -fPIC)\
-  $(eval __modules.$(LOCAL_MODULE).LOCAL_LDFLAGS  += -fPIC)\
-  $(call _add-module,$(LOCAL_MODULE))
+  $(eval MODULE_PATH := $1)\
+  $(eval MODULE_MODULE ?= $(notdir $(MODULE_PATH)))\
+  $(eval __modules.$(MODULE_MODULE).MODULE_TARGET := $(MODULE_PATH)/lib$(MODULE_MODULE).so)\
+  $(eval __modules.$(MODULE_MODULE).MODULE_TYPE   := shared_library)\
+  $(eval __modules.$(MODULE_MODULE).MODULE_CPPFLAGS += -fPIC)\
+  $(eval __modules.$(MODULE_MODULE).MODULE_LDFLAGS  += -fPIC)\
+  $(call _add-module,$(MODULE_MODULE))
 
 
 # ----------------------------------------------------------------------
@@ -203,14 +203,14 @@ add-shared-library-module =\
 # usage    : $(call add-static-library-module)
 # rationale: used in Module.mk files to add a static library target to
 #            the build system
-# note     : this function requires LOCAL_PATH to be set by caller
+# note     : this function requires MODULE_PATH to be set by caller
 # ----------------------------------------------------------------------
 add-static-library-module =\
-  $(eval LOCAL_PATH := $1)\
-  $(eval LOCAL_MODULE ?= $(notdir $(LOCAL_PATH)))\
-  $(eval __modules.$(LOCAL_MODULE).LOCAL_TARGET := $(LOCAL_PATH)/lib$(LOCAL_MODULE).a)\
-  $(eval __modules.$(LOCAL_MODULE).LOCAL_TYPE   := static_library)\
-  $(call _add-module,$(LOCAL_MODULE))
+  $(eval MODULE_PATH := $1)\
+  $(eval MODULE_MODULE ?= $(notdir $(MODULE_PATH)))\
+  $(eval __modules.$(MODULE_MODULE).MODULE_TARGET := $(MODULE_PATH)/lib$(MODULE_MODULE).a)\
+  $(eval __modules.$(MODULE_MODULE).MODULE_TYPE   := static_library)\
+  $(call _add-module,$(MODULE_MODULE))
 
 
 # ----------------------------------------------------------------------
@@ -222,21 +222,21 @@ add-static-library-module =\
 #            all of the different module types.
 # ----------------------------------------------------------------------
 _add-module =\
-  $(if $(LOCAL_SOURCE_FILES),\
-    $(eval __local_src := $(addprefix $(LOCAL_PATH)/,$(LOCAL_SOURCE_FILES)))\
+  $(if $(MODULE_SOURCE_FILES),\
+    $(eval __local_src := $(addprefix $(MODULE_PATH)/,$(MODULE_SOURCE_FILES)))\
   ,\
-    $(eval __local_src := $(wildcard $(LOCAL_PATH)/*.cpp))\
+    $(eval __local_src := $(wildcard $(MODULE_PATH)/*.cpp))\
   )\
-  $(eval __modules.$1.LOCAL_CFLAGS       += $(LOCAL_CFLAGS))\
-  $(eval __modules.$1.LOCAL_CPPFLAGS     += $(LOCAL_CPPFLAGS))\
-  $(eval __modules.$1.LOCAL_CXXFLAGS     += $(LOCAL_CXXFLAGS))\
-  $(eval __modules.$1.LOCAL_DEPS         += $(call convert-c-cpp-suffix-to,$(__local_src),d))\
-  $(eval __modules.$1.LOCAL_LDFLAGS      += $(LOCAL_LDFLAGS))\
-  $(eval __modules.$1.LOCAL_LDLIBS       += $(addprefix -l,$(LOCAL_LIBRARIES)) $(LOCAL_LDLIBS))\
-  $(eval __modules.$1.LOCAL_OBJS         += $(call convert-c-cpp-suffix-to,$(__local_src),o))\
-  $(eval __modules.$1.LOCAL_PATH         += $(LOCAL_PATH))\
-  $(eval __modules.$1.LOCAL_LIBRARIES    += $(LOCAL_LIBRARIES))\
-  $(eval __modules.$1.LOCAL_SOURCE_FILES += $(__local_src))\
+  $(eval __modules.$1.MODULE_CFLAGS       += $(MODULE_CFLAGS))\
+  $(eval __modules.$1.MODULE_CPPFLAGS     += $(MODULE_CPPFLAGS))\
+  $(eval __modules.$1.MODULE_CXXFLAGS     += $(MODULE_CXXFLAGS))\
+  $(eval __modules.$1.MODULE_DEPS         += $(call convert-c-cpp-suffix-to,$(__local_src),d))\
+  $(eval __modules.$1.MODULE_LDFLAGS      += $(MODULE_LDFLAGS))\
+  $(eval __modules.$1.MODULE_LDLIBS       += $(addprefix -l,$(MODULE_LIBRARIES)) $(MODULE_LDLIBS))\
+  $(eval __modules.$1.MODULE_OBJS         += $(call convert-c-cpp-suffix-to,$(__local_src),o))\
+  $(eval __modules.$1.MODULE_PATH         += $(MODULE_PATH))\
+  $(eval __modules.$1.MODULE_LIBRARIES    += $(MODULE_LIBRARIES))\
+  $(eval __modules.$1.MODULE_SOURCE_FILES += $(__local_src))\
   $(eval __all_modules += $1)\
   $(call clear-vars)
 
@@ -249,9 +249,9 @@ _add-module =\
 # rationale: generates rules for module
 # ----------------------------------------------------------------------
 build-module-rules =\
-  $(eval __modules.$1.LOCAL_LDFLAGS += -L$(LIB_DIR))\
-  $(eval $1: $(__modules.$1.LOCAL_TARGET))\
-  $(eval $1: $(__modules.$1.LOCAL_PATH)/Module.mk)
+  $(eval __modules.$1.MODULE_LDFLAGS += -L$(LIB_DIR))\
+  $(eval $1: $(__modules.$1.MODULE_TARGET))\
+  $(eval $1: $(__modules.$1.MODULE_PATH)/Module.mk)
 
 
 # ----------------------------------------------------------------------
@@ -259,15 +259,15 @@ build-module-rules =\
 # arguments: 1: module name
 # returns  : nothing
 # usage    : $(call build-local-target-rules,<module_name>)
-# rationale: generates rules for module's LOCAL_TARGET
+# rationale: generates rules for module's MODULE_TARGET
 # ----------------------------------------------------------------------
 build-local-target-rules =\
-  $(eval $(__modules.$1.LOCAL_TARGET): $(__modules.$1.LOCAL_OBJS))\
-  $(eval $(__modules.$1.LOCAL_TARGET): $(__modules.$1.LOCAL_PATH)/Module.mk)\
-  $(eval $(__modules.$1.LOCAL_TARGET):| $(BIN_DIR) $(LIB_DIR))\
-  $(foreach other_module,$(__modules.$1.LOCAL_LIBRARIES),\
-    $(eval $(__modules.$1.LOCAL_TARGET): $(__modules.$(other_module).LOCAL_TARGET))\
-    $(eval $(__modules.$1.LOCAL_TARGET): $(__modules.$(other_module).LOCAL_PATH)/Module.mk)\
+  $(eval $(__modules.$1.MODULE_TARGET): $(__modules.$1.MODULE_OBJS))\
+  $(eval $(__modules.$1.MODULE_TARGET): $(__modules.$1.MODULE_PATH)/Module.mk)\
+  $(eval $(__modules.$1.MODULE_TARGET):| $(BIN_DIR) $(LIB_DIR))\
+  $(foreach other_module,$(__modules.$1.MODULE_LIBRARIES),\
+    $(eval $(__modules.$1.MODULE_TARGET): $(__modules.$(other_module).MODULE_TARGET))\
+    $(eval $(__modules.$1.MODULE_TARGET): $(__modules.$(other_module).MODULE_PATH)/Module.mk)\
   )
 
 # ----------------------------------------------------------------------
@@ -276,21 +276,21 @@ build-local-target-rules =\
 # returns  : nothing
 # usage    : $(call build-internal-dependencies,<module_name>)
 # rationale: internal dependencies are based on the values given in
-#            LOCAL_LIBRARIES, so for each module provided, append all
+#            MODULE_LIBRARIES, so for each module provided, append all
 #            flags from that module to this module
 #            Note that certain variables are uniq'd.
 # ----------------------------------------------------------------------
 build-internal-dependencies =\
-  $(foreach other_module,$(__modules.$1.LOCAL_LIBRARIES),\
-    $(eval __modules.$1.LOCAL_CPPFLAGS += $(__modules.$(other_module).LOCAL_CPPFLAGS))\
-    $(eval __modules.$1.LOCAL_CFLAGS += $(__modules.$(other_module).LOCAL_CFLAGS))\
-    $(eval __modules.$1.LOCAL_CXXFLAGS += $(__modules.$(other_module).LOCAL_CXXFLAGS))\
-    $(eval __modules.$1.LOCAL_LDFLAGS += $(__modules.$(other_module).LOCAL_LDFLAGS))\
-    $(eval __modules.$1.LOCAL_LDLIBS += $(__modules.$(other_module).LOCAL_LDLIBS))\
+  $(foreach other_module,$(__modules.$1.MODULE_LIBRARIES),\
+    $(eval __modules.$1.MODULE_CPPFLAGS += $(__modules.$(other_module).MODULE_CPPFLAGS))\
+    $(eval __modules.$1.MODULE_CFLAGS += $(__modules.$(other_module).MODULE_CFLAGS))\
+    $(eval __modules.$1.MODULE_CXXFLAGS += $(__modules.$(other_module).MODULE_CXXFLAGS))\
+    $(eval __modules.$1.MODULE_LDFLAGS += $(__modules.$(other_module).MODULE_LDFLAGS))\
+    $(eval __modules.$1.MODULE_LDLIBS += $(__modules.$(other_module).MODULE_LDLIBS))\
     \
-    $(eval __modules.$1.LOCAL_CPPFLAGS := $(call uniq,$(__modules.$1.LOCAL_CPPFLAGS)))\
-    $(eval __modules.$1.LOCAL_LDLIBS := $(call uniq,$(__modules.$1.LOCAL_LDLIBS)))\
-    $(eval __modules.$1.LOCAL_LDFLAGS := $(call uniq,$(__modules.$1.LOCAL_LDFLAGS)))\
+    $(eval __modules.$1.MODULE_CPPFLAGS := $(call uniq,$(__modules.$1.MODULE_CPPFLAGS)))\
+    $(eval __modules.$1.MODULE_LDLIBS := $(call uniq,$(__modules.$1.MODULE_LDLIBS)))\
+    $(eval __modules.$1.MODULE_LDFLAGS := $(call uniq,$(__modules.$1.MODULE_LDFLAGS)))\
   )
 
 # ----------------------------------------------------------------------
@@ -299,15 +299,15 @@ build-internal-dependencies =\
 # returns  : nothing
 # usage    : $(call build-object-rules,<module_name>)
 # rationale: generates rules for each object file (*.o) in module's
-#            LOCAL_OBJS
+#            MODULE_OBJS
 # ----------------------------------------------------------------------
 build-object-rules =\
-  $(foreach source,$(__modules.$1.LOCAL_SOURCE_FILES),\
+  $(foreach source,$(__modules.$1.MODULE_SOURCE_FILES),\
     $(eval $(call convert-c-cpp-suffix-to,$(source),o): $(source) Makefile nrmake/env.mk nrmake/functions.mk nrmake/pattern_rules.mk nrmake/third_party.mk)\
-    $(eval $(call convert-c-cpp-suffix-to,$(source),o): $(__modules.$1.LOCAL_PATH)/Module.mk)\
-    $(eval $(call convert-c-cpp-suffix-to,$(source),o): __local_cflags := $$(__modules.$1.LOCAL_CFLAGS))\
-    $(eval $(call convert-c-cpp-suffix-to,$(source),o): __local_cppflags := $$(__modules.$1.LOCAL_CPPFLAGS))\
-    $(eval $(call convert-c-cpp-suffix-to,$(source),o): __local_cxxflags := $$(__modules.$1.LOCAL_CXXFLAGS))\
+    $(eval $(call convert-c-cpp-suffix-to,$(source),o): $(__modules.$1.MODULE_PATH)/Module.mk)\
+    $(eval $(call convert-c-cpp-suffix-to,$(source),o): __local_cflags := $$(__modules.$1.MODULE_CFLAGS))\
+    $(eval $(call convert-c-cpp-suffix-to,$(source),o): __local_cppflags := $$(__modules.$1.MODULE_CPPFLAGS))\
+    $(eval $(call convert-c-cpp-suffix-to,$(source),o): __local_cxxflags := $$(__modules.$1.MODULE_CXXFLAGS))\
   )
 
 
@@ -326,15 +326,15 @@ build-rules =\
     $(call build-local-target-rules,$(module))\
     $(call build-internal-dependencies,$(module))\
     $(call build-object-rules,$(module))\
-    $(eval -include $(__modules.$(module).LOCAL_DEPS))\
+    $(eval -include $(__modules.$(module).MODULE_DEPS))\
     \
-    $(if $(filter executable,$(__modules.$(module).LOCAL_TYPE)),\
+    $(if $(filter executable,$(__modules.$(module).MODULE_TYPE)),\
       $(call build-executable,$(module))\
     )\
-    $(if $(filter shared_library,$(__modules.$(module).LOCAL_TYPE)),\
+    $(if $(filter shared_library,$(__modules.$(module).MODULE_TYPE)),\
       $(call build-shared-library,$(module))\
     )\
-    $(if $(filter static_library,$(__modules.$(module).LOCAL_TYPE)),\
+    $(if $(filter static_library,$(__modules.$(module).MODULE_TYPE)),\
       $(call build-static-library,$(module))\
     )\
   )
@@ -345,13 +345,13 @@ build-rules =\
 # arguments: 1: module name
 # returns  : nothing
 # usage    : $(call build-executable,<module_name>)
-# rationale: generates recipe for module's LOCAL_TARGET
+# rationale: generates recipe for module's MODULE_TARGET
 # ----------------------------------------------------------------------
 define build-executable
-$(__modules.$1.LOCAL_TARGET): __build_cmd := $$(call cmd-build,$1)
-$(__modules.$1.LOCAL_TARGET):
+$(__modules.$1.MODULE_TARGET): __build_cmd := $$(call cmd-build,$1)
+$(__modules.$1.MODULE_TARGET):
 	$$(__build_cmd)
-	$(CP) $(__modules.$1.LOCAL_TARGET) $(BIN_DIR)/$(notdir $(__modules.$1.LOCAL_TARGET))
+	$(CP) $(__modules.$1.MODULE_TARGET) $(BIN_DIR)/$(notdir $(__modules.$1.MODULE_TARGET))
 
 endef
 
@@ -361,13 +361,13 @@ endef
 # arguments: 1: module name
 # returns  : nothing
 # usage    : $(call build-shared-library,<module_name>)
-# rationale: generates recipe for module's LOCAL_TARGET
+# rationale: generates recipe for module's MODULE_TARGET
 # ----------------------------------------------------------------------
 define build-shared-library
-$(__modules.$1.LOCAL_TARGET): __build_cmd := $$(call cmd-build,$1)
-$(__modules.$1.LOCAL_TARGET):
+$(__modules.$1.MODULE_TARGET): __build_cmd := $$(call cmd-build,$1)
+$(__modules.$1.MODULE_TARGET):
 	$$(__build_cmd)
-	$(CP) $(__modules.$1.LOCAL_TARGET) $(LIB_DIR)/$(notdir $(__modules.$1.LOCAL_TARGET))
+	$(CP) $(__modules.$1.MODULE_TARGET) $(LIB_DIR)/$(notdir $(__modules.$1.MODULE_TARGET))
 
 endef
 
@@ -377,13 +377,13 @@ endef
 # arguments: 1: module name
 # returns  : nothing
 # usage    : $(call build-static-library,<module_name>)
-# rationale: generates recipe for module's LOCAL_TARGET
+# rationale: generates recipe for module's MODULE_TARGET
 # ----------------------------------------------------------------------
 define build-static-library
-$(__modules.$1.LOCAL_TARGET): __build_cmd := $$(call cmd-build-static-library,$1)
-$(__modules.$1.LOCAL_TARGET):
+$(__modules.$1.MODULE_TARGET): __build_cmd := $$(call cmd-build-static-library,$1)
+$(__modules.$1.MODULE_TARGET):
 	$$(__build_cmd)
-	$(CP) $(__modules.$1.LOCAL_TARGET) $(LIB_DIR)/$(notdir $(__modules.$1.LOCAL_TARGET))
+	$(CP) $(__modules.$1.MODULE_TARGET) $(LIB_DIR)/$(notdir $(__modules.$1.MODULE_TARGET))
 
 endef
 
@@ -394,31 +394,31 @@ endef
 # returns  : full, executable, compilation/link line for executables and
 #            shared libraries
 # usage    : $(call cmd-build,<module_name>)
-# note     : If there is a file in LOCAL_SOURCE_FILES with an extension
+# note     : If there is a file in MODULE_SOURCE_FILES with an extension
 #          : of ".cpp", then $(CXX) will be used to compile/link,
 #          : otherwise, $(CC) will be used.
 # ----------------------------------------------------------------------
 cmd-build =\
   $(strip \
-    $(if $(filter %.cpp,$(__modules.$1.LOCAL_SOURCE_FILES)),\
-      $(if $(filter executable,$(__modules.$1.LOCAL_TYPE)),\
+    $(if $(filter %.cpp,$(__modules.$1.MODULE_SOURCE_FILES)),\
+      $(if $(filter executable,$(__modules.$1.MODULE_TYPE)),\
         $(call cmd-build-cpp-executable,$1)\
       )\
-      $(if $(filter shared_library,$(__modules.$1.LOCAL_TYPE)),\
+      $(if $(filter shared_library,$(__modules.$1.MODULE_TYPE)),\
         $(call cmd-build-cpp-shared-library,$1)\
       )\
-      $(if $(filter static_library,$(__modules.$1.LOCAL_TYPE)),\
+      $(if $(filter static_library,$(__modules.$1.MODULE_TYPE)),\
         $(call cmd-build-static-library,$1)\
       )\
     ,\
-      $(if $(filter %.c,$(__modules.$1.LOCAL_SOURCE_FILES)),\
-        $(if $(filter executable,$(__modules.$1.LOCAL_TYPE)),\
+      $(if $(filter %.c,$(__modules.$1.MODULE_SOURCE_FILES)),\
+        $(if $(filter executable,$(__modules.$1.MODULE_TYPE)),\
           $(call cmd-build-c-executable,$1)\
         )\
-        $(if $(filter shared_library,$(__modules.$1.LOCAL_TYPE)),\
+        $(if $(filter shared_library,$(__modules.$1.MODULE_TYPE)),\
           $(call cmd-build-c-shared-library,$1)\
         )\
-        $(if $(filter static_library,$(__modules.$1.LOCAL_TYPE)),\
+        $(if $(filter static_library,$(__modules.$1.MODULE_TYPE)),\
           $(call cmd-build-static-library,$1)\
         )\
       )\
@@ -435,17 +435,17 @@ cmd-build =\
 # ----------------------------------------------------------------------
 cmd-build-c-executable =\
   $(CC)\
-  $(__modules.$1.LOCAL_OBJS)\
+  $(__modules.$1.MODULE_OBJS)\
   $(CPPFLAGS)\
-  $(__modules.$1.LOCAL_CPPFLAGS)\
+  $(__modules.$1.MODULE_CPPFLAGS)\
   $(CFLAGS)\
-  $(__modules.$1.LOCAL_CFLAGS)\
+  $(__modules.$1.MODULE_CFLAGS)\
   $(LDFLAGS)\
-  $(__modules.$1.LOCAL_LDFLAGS)\
+  $(__modules.$1.MODULE_LDFLAGS)\
   $(TARGET_ARCH)\
   $(LDLIBS)\
-  $(__modules.$1.LOCAL_LDLIBS)\
-  -o $(__modules.$1.LOCAL_TARGET)
+  $(__modules.$1.MODULE_LDLIBS)\
+  -o $(__modules.$1.MODULE_TARGET)
 
 
 # ----------------------------------------------------------------------
@@ -457,17 +457,17 @@ cmd-build-c-executable =\
 # ----------------------------------------------------------------------
 cmd-build-c-shared-library =\
   $(CC)\
-  $(__modules.$1.LOCAL_OBJS)\
+  $(__modules.$1.MODULE_OBJS)\
   $(CPPFLAGS)\
-  $(__modules.$1.LOCAL_CPPFLAGS)\
+  $(__modules.$1.MODULE_CPPFLAGS)\
   $(CFLAGS)\
-  $(__modules.$1.LOCAL_CFLAGS)\
+  $(__modules.$1.MODULE_CFLAGS)\
   $(LDFLAGS)\
-  $(__modules.$1.LOCAL_LDFLAGS) -shared\
+  $(__modules.$1.MODULE_LDFLAGS) -shared\
   $(TARGET_ARCH)\
   $(LDLIBS)\
-  $(__modules.$1.LOCAL_LDLIBS)\
-  -o $(__modules.$1.LOCAL_TARGET)
+  $(__modules.$1.MODULE_LDLIBS)\
+  -o $(__modules.$1.MODULE_TARGET)
 
 
 # ----------------------------------------------------------------------
@@ -479,17 +479,17 @@ cmd-build-c-shared-library =\
 # ----------------------------------------------------------------------
 cmd-build-cpp-executable =\
   $(CXX)\
-  $(__modules.$1.LOCAL_OBJS)\
+  $(__modules.$1.MODULE_OBJS)\
   $(CPPFLAGS)\
-  $(__modules.$1.LOCAL_CPPFLAGS)\
+  $(__modules.$1.MODULE_CPPFLAGS)\
   $(CXXFLAGS)\
-  $(__modules.$1.LOCAL_CXXFLAGS)\
+  $(__modules.$1.MODULE_CXXFLAGS)\
   $(LDFLAGS)\
-  $(__modules.$1.LOCAL_LDFLAGS)\
+  $(__modules.$1.MODULE_LDFLAGS)\
   $(TARGET_ARCH)\
   $(LDLIBS)\
-  $(__modules.$1.LOCAL_LDLIBS)\
-  -o $(__modules.$1.LOCAL_TARGET)
+  $(__modules.$1.MODULE_LDLIBS)\
+  -o $(__modules.$1.MODULE_TARGET)
 
 
 # ----------------------------------------------------------------------
@@ -501,17 +501,17 @@ cmd-build-cpp-executable =\
 # ----------------------------------------------------------------------
 cmd-build-cpp-shared-library =\
   $(CXX)\
-  $(__modules.$1.LOCAL_OBJS)\
+  $(__modules.$1.MODULE_OBJS)\
   $(CPPFLAGS)\
-  $(__modules.$1.LOCAL_CPPFLAGS)\
+  $(__modules.$1.MODULE_CPPFLAGS)\
   $(CXXFLAGS)\
-  $(__modules.$1.LOCAL_CXXFLAGS)\
+  $(__modules.$1.MODULE_CXXFLAGS)\
   $(LDFLAGS)\
-  $(__modules.$1.LOCAL_LDFLAGS) -shared\
+  $(__modules.$1.MODULE_LDFLAGS) -shared\
   $(TARGET_ARCH)\
   $(LDLIBS)\
-  $(__modules.$1.LOCAL_LDLIBS)\
-  -o $(__modules.$1.LOCAL_TARGET)
+  $(__modules.$1.MODULE_LDLIBS)\
+  -o $(__modules.$1.MODULE_TARGET)
 
 
 # ----------------------------------------------------------------------
@@ -522,8 +522,8 @@ cmd-build-cpp-shared-library =\
 # ----------------------------------------------------------------------
 cmd-build-static-library =\
   $(AR)\
-  $(__modules.$1.LOCAL_TARGET)\
-  $(__modules.$1.LOCAL_OBJS)
+  $(__modules.$1.MODULE_TARGET)\
+  $(__modules.$1.MODULE_OBJS)
 
 
 # ----------------------------------------------------------------------
@@ -535,7 +535,7 @@ cmd-build-static-library =\
 # ----------------------------------------------------------------------
 run-clang-tidy =\
   $(foreach module,$(filter-out benchmark-runner test-runner,$(__all_modules)),\
-    $(if $(filter %.cpp,$(__modules.$(module).LOCAL_SOURCE_FILES)),\
+    $(if $(filter %.cpp,$(__modules.$(module).MODULE_SOURCE_FILES)),\
       $(call cmd-clang-tidy,$(module))\
       $(\n)\
     )\
@@ -550,12 +550,12 @@ run-clang-tidy =\
 # ----------------------------------------------------------------------
 cmd-clang-tidy =\
   $(TIDY)\
-  $(__modules.$1.LOCAL_SOURCE_FILES)\
+  $(__modules.$1.MODULE_SOURCE_FILES)\
   --\
   $(CPPFLAGS)\
-  $(__modules.$1.LOCAL_CPPFLAGS)\
+  $(__modules.$1.MODULE_CPPFLAGS)\
   $(CXXFLAGS)\
-  $(__modules.$1.LOCAL_CXXFLAGS)
+  $(__modules.$1.MODULE_CXXFLAGS)
 
 
 # debugging functions
@@ -575,16 +575,16 @@ list-modules =\
   $(info )\
   $(foreach module,$(__all_modules),\
     $(info $(module))\
-    $(info $(space2)LOCAL_CFLAGS           [$(__modules.$(module).LOCAL_CFLAGS)])\
-    $(info $(space2)LOCAL_CPPFLAGS         [$(__modules.$(module).LOCAL_CPPFLAGS)])\
-    $(info $(space2)LOCAL_CXXFLAGS         [$(__modules.$(module).LOCAL_CXXFLAGS)])\
-    $(info $(space2)LOCAL_DEPS             [$(__modules.$(module).LOCAL_DEPS)])\
-    $(info $(space2)LOCAL_LDFLAGS          [$(__modules.$(module).LOCAL_LDFLAGS)])\
-    $(info $(space2)LOCAL_LDLIBS           [$(__modules.$(module).LOCAL_LDLIBS)])\
-    $(info $(space2)LOCAL_OBJS             [$(__modules.$(module).LOCAL_OBJS)])\
-    $(info $(space2)LOCAL_PATH             [$(__modules.$(module).LOCAL_PATH)])\
-    $(info $(space2)LOCAL_LIBRARIES        [$(__modules.$(module).LOCAL_LIBRARIES)])\
-    $(info $(space2)LOCAL_SOURCE_FILES     [$(__modules.$(module).LOCAL_SOURCE_FILES)])\
-    $(info $(space2)LOCAL_TARGET           [$(__modules.$(module).LOCAL_TARGET)])\
-    $(info $(space2)LOCAL_TYPE             [$(__modules.$(module).LOCAL_TYPE)])\
+    $(info $(space2)MODULE_CFLAGS           [$(__modules.$(module).MODULE_CFLAGS)])\
+    $(info $(space2)MODULE_CPPFLAGS         [$(__modules.$(module).MODULE_CPPFLAGS)])\
+    $(info $(space2)MODULE_CXXFLAGS         [$(__modules.$(module).MODULE_CXXFLAGS)])\
+    $(info $(space2)MODULE_DEPS             [$(__modules.$(module).MODULE_DEPS)])\
+    $(info $(space2)MODULE_LDFLAGS          [$(__modules.$(module).MODULE_LDFLAGS)])\
+    $(info $(space2)MODULE_LDLIBS           [$(__modules.$(module).MODULE_LDLIBS)])\
+    $(info $(space2)MODULE_OBJS             [$(__modules.$(module).MODULE_OBJS)])\
+    $(info $(space2)MODULE_PATH             [$(__modules.$(module).MODULE_PATH)])\
+    $(info $(space2)MODULE_LIBRARIES        [$(__modules.$(module).MODULE_LIBRARIES)])\
+    $(info $(space2)MODULE_SOURCE_FILES     [$(__modules.$(module).MODULE_SOURCE_FILES)])\
+    $(info $(space2)MODULE_TARGET           [$(__modules.$(module).MODULE_TARGET)])\
+    $(info $(space2)MODULE_TYPE             [$(__modules.$(module).MODULE_TYPE)])\
   )
