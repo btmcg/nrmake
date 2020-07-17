@@ -40,7 +40,7 @@ submodule. From your project's root directory, do the following:
 
     git submodule add -- https://gitlab.com/btmcg/nrmake.git
     cd nrmake
-    git checkout v1.0.0
+    git checkout v2.0.0
     cd ..
     cp nrmake/example_makefile Makefile
 
