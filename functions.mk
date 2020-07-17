@@ -13,7 +13,7 @@ modules-locals := \
   MODULE_LDFLAGS \
   MODULE_LDLIBS \
   MODULE_LIBRARIES \
-  MODULE_MODULE \
+  MODULE_NAME \
   MODULE_OBJS \
   MODULE_PATH \
   MODULE_SOURCE_FILES \
@@ -171,10 +171,10 @@ load-modules =\
 # ----------------------------------------------------------------------
 add-executable-module =\
   $(eval MODULE_PATH := $1)\
-  $(eval MODULE_MODULE ?= $(notdir $(MODULE_PATH)))\
-  $(eval __modules.$(MODULE_MODULE).MODULE_TARGET := $(MODULE_PATH)/$(MODULE_MODULE))\
-  $(eval __modules.$(MODULE_MODULE).MODULE_TYPE   := executable)\
-  $(call _add-module,$(MODULE_MODULE))
+  $(eval MODULE_NAME ?= $(notdir $(MODULE_PATH)))\
+  $(eval __modules.$(MODULE_NAME).MODULE_TARGET := $(MODULE_PATH)/$(MODULE_NAME))\
+  $(eval __modules.$(MODULE_NAME).MODULE_TYPE   := executable)\
+  $(call _add-module,$(MODULE_NAME))
 
 
 # ----------------------------------------------------------------------
@@ -188,12 +188,12 @@ add-executable-module =\
 # ----------------------------------------------------------------------
 add-shared-library-module =\
   $(eval MODULE_PATH := $1)\
-  $(eval MODULE_MODULE ?= $(notdir $(MODULE_PATH)))\
-  $(eval __modules.$(MODULE_MODULE).MODULE_TARGET := $(MODULE_PATH)/lib$(MODULE_MODULE).so)\
-  $(eval __modules.$(MODULE_MODULE).MODULE_TYPE   := shared_library)\
-  $(eval __modules.$(MODULE_MODULE).MODULE_CPPFLAGS += -fPIC)\
-  $(eval __modules.$(MODULE_MODULE).MODULE_LDFLAGS  += -fPIC)\
-  $(call _add-module,$(MODULE_MODULE))
+  $(eval MODULE_NAME ?= $(notdir $(MODULE_PATH)))\
+  $(eval __modules.$(MODULE_NAME).MODULE_TARGET := $(MODULE_PATH)/lib$(MODULE_NAME).so)\
+  $(eval __modules.$(MODULE_NAME).MODULE_TYPE   := shared_library)\
+  $(eval __modules.$(MODULE_NAME).MODULE_CPPFLAGS += -fPIC)\
+  $(eval __modules.$(MODULE_NAME).MODULE_LDFLAGS  += -fPIC)\
+  $(call _add-module,$(MODULE_NAME))
 
 
 # ----------------------------------------------------------------------
@@ -207,10 +207,10 @@ add-shared-library-module =\
 # ----------------------------------------------------------------------
 add-static-library-module =\
   $(eval MODULE_PATH := $1)\
-  $(eval MODULE_MODULE ?= $(notdir $(MODULE_PATH)))\
-  $(eval __modules.$(MODULE_MODULE).MODULE_TARGET := $(MODULE_PATH)/lib$(MODULE_MODULE).a)\
-  $(eval __modules.$(MODULE_MODULE).MODULE_TYPE   := static_library)\
-  $(call _add-module,$(MODULE_MODULE))
+  $(eval MODULE_NAME ?= $(notdir $(MODULE_PATH)))\
+  $(eval __modules.$(MODULE_NAME).MODULE_TARGET := $(MODULE_PATH)/lib$(MODULE_NAME).a)\
+  $(eval __modules.$(MODULE_NAME).MODULE_TYPE   := static_library)\
+  $(call _add-module,$(MODULE_NAME))
 
 
 # ----------------------------------------------------------------------

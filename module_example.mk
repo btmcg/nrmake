@@ -72,7 +72,7 @@
 # Example: core mylib1 mylib2
 # Default: empty
 
-# MODULE_MODULE
+# MODULE_NAME
 # This should contain the name of this particular module, if it should
 # be different than the basename of the path defined by calling
 # get-path.
