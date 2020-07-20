@@ -1,3 +1,10 @@
+2.0.1 - 2020-07-20
+------------------
+* For the ``format`` target, check for existence of directory before
+  calling find so that if a directory doesn't exist, the command doesn't
+  fail.
+
+
 2.0.0 - 2020-07-17
 ------------------
 * Make fmt v7.0.0 default in ``third_party.mk``.
