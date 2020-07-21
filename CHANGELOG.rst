@@ -1,3 +1,8 @@
+2.0.2 - 2020-07-21
+------------------
+* Fix the ``format`` target. Again.
+
+
 2.0.1 - 2020-07-20
 ------------------
 * For the ``format`` target, check for existence of directory before
