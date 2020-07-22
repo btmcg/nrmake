@@ -236,17 +236,17 @@ _add-module =\
       $(eval __modules.$1.MODULE_EXPORT_HEADERS_PREFIX := $(subst src/,,$(MODULE_PATH)))\
     )\
   )\
-  $(eval __modules.$1.MODULE_CFLAGS       += $(MODULE_CFLAGS))\
-  $(eval __modules.$1.MODULE_CPPFLAGS     += $(MODULE_CPPFLAGS))\
-  $(eval __modules.$1.MODULE_CXXFLAGS     += $(MODULE_CXXFLAGS))\
-  $(eval __modules.$1.MODULE_DEPS         += $(call convert-c-cpp-suffix-to,$(__local_src),d))\
+  $(eval __modules.$1.MODULE_CFLAGS       := $(MODULE_CFLAGS))\
+  $(eval __modules.$1.MODULE_CPPFLAGS     := $(MODULE_CPPFLAGS))\
+  $(eval __modules.$1.MODULE_CXXFLAGS     := $(MODULE_CXXFLAGS))\
+  $(eval __modules.$1.MODULE_DEPS         := $(call convert-c-cpp-suffix-to,$(__local_src),d))\
   $(eval __modules.$1.MODULE_EXPORT_HEADERS := $(addprefix $(MODULE_PATH)/,$(MODULE_EXPORT_HEADERS)))\
-  $(eval __modules.$1.MODULE_LDFLAGS      += $(MODULE_LDFLAGS))\
-  $(eval __modules.$1.MODULE_LDLIBS       += $(addprefix -l,$(MODULE_LIBRARIES)) $(MODULE_LDLIBS))\
-  $(eval __modules.$1.MODULE_OBJS         += $(call convert-c-cpp-suffix-to,$(__local_src),o))\
-  $(eval __modules.$1.MODULE_PATH         += $(MODULE_PATH))\
-  $(eval __modules.$1.MODULE_LIBRARIES    += $(MODULE_LIBRARIES))\
-  $(eval __modules.$1.MODULE_SOURCE_FILES += $(__local_src))\
+  $(eval __modules.$1.MODULE_LDFLAGS      := $(MODULE_LDFLAGS))\
+  $(eval __modules.$1.MODULE_LDLIBS       := $(addprefix -l,$(MODULE_LIBRARIES)) $(MODULE_LDLIBS))\
+  $(eval __modules.$1.MODULE_OBJS         := $(call convert-c-cpp-suffix-to,$(__local_src),o))\
+  $(eval __modules.$1.MODULE_PATH         := $(MODULE_PATH))\
+  $(eval __modules.$1.MODULE_LIBRARIES    := $(MODULE_LIBRARIES))\
+  $(eval __modules.$1.MODULE_SOURCE_FILES := $(__local_src))\
   $(eval __all_modules += $1)\
   $(call clear-vars)
 
