@@ -115,7 +115,7 @@ convert-c-cpp-suffix-to =\
 # usage    : $(call get-all-deps)
 # ----------------------------------------------------------------------
 get-all-deps =\
-  $(foreach module,$(__all_modules),$(__modules.$(module).MODULE_DEPS))
+  $(foreach name,$(__all_modules),$(__modules.$(name).MODULE_DEPS))
 
 
 # ----------------------------------------------------------------------
@@ -134,7 +134,7 @@ get-all-modules = $(__all_modules)
 # usage    : $(call get-all-objs)
 # ----------------------------------------------------------------------
 get-all-objs =\
-  $(foreach module,$(__all_modules),$(__modules.$(module).MODULE_OBJS))
+  $(foreach name,$(__all_modules),$(__modules.$(name).MODULE_OBJS))
 
 
 # ----------------------------------------------------------------------
@@ -143,7 +143,7 @@ get-all-objs =\
 # usage    : $(call get-all-targets)
 # ----------------------------------------------------------------------
 get-all-targets =\
-  $(foreach module,$(__all_modules),$(__modules.$(module).MODULE_TARGET))
+  $(foreach name,$(__all_modules),$(__modules.$(name).MODULE_TARGET))
 
 
 # ----------------------------------------------------------------------
@@ -331,21 +331,21 @@ build-object-rules =\
 #            determined, all that is left to do is kick off the build.
 # ----------------------------------------------------------------------
 build-rules =\
-  $(foreach module,$1,\
-    $(call build-module-rules,$(module))\
-    $(call build-local-target-rules,$(module))\
-    $(call build-internal-dependencies,$(module))\
-    $(call build-object-rules,$(module))\
-    $(eval -include $(__modules.$(module).MODULE_DEPS))\
+  $(foreach name,$1,\
+    $(call build-module-rules,$(name))\
+    $(call build-local-target-rules,$(name))\
+    $(call build-internal-dependencies,$(name))\
+    $(call build-object-rules,$(name))\
+    $(eval -include $(__modules.$(name).MODULE_DEPS))\
     \
-    $(if $(filter executable,$(__modules.$(module).MODULE_TYPE)),\
-      $(call build-executable,$(module))\
+    $(if $(filter executable,$(__modules.$(name).MODULE_TYPE)),\
+      $(call build-executable,$(name))\
     )\
-    $(if $(filter shared_library,$(__modules.$(module).MODULE_TYPE)),\
-      $(call build-shared-library,$(module))\
+    $(if $(filter shared_library,$(__modules.$(name).MODULE_TYPE)),\
+      $(call build-shared-library,$(name))\
     )\
-    $(if $(filter static_library,$(__modules.$(module).MODULE_TYPE)),\
-      $(call build-static-library,$(module))\
+    $(if $(filter static_library,$(__modules.$(name).MODULE_TYPE)),\
+      $(call build-static-library,$(name))\
     )\
   )
 
@@ -544,9 +544,9 @@ cmd-build-static-library =\
 # usage    : $(run-clang-tidy)
 # ----------------------------------------------------------------------
 run-clang-tidy =\
-  $(foreach module,$(filter-out benchmark-runner test-runner,$(__all_modules)),\
-    $(if $(filter %.cpp,$(__modules.$(module).MODULE_SOURCE_FILES)),\
-      $(call cmd-clang-tidy,$(module))\
+  $(foreach name,$(filter-out benchmark-runner test-runner,$(__all_modules)),\
+    $(if $(filter %.cpp,$(__modules.$(name).MODULE_SOURCE_FILES)),\
+      $(call cmd-clang-tidy,$(name))\
       $(\n)\
     )\
   )
@@ -609,20 +609,20 @@ list-modules =\
   $(info deps    [$(call get-all-deps)])\
   $(info objs    [$(call get-all-objs)])\
   $(info )\
-  $(foreach module,$(__all_modules),\
-    $(info $(module))\
-    $(info $(space2)MODULE_CFLAGS                [$(__modules.$(module).MODULE_CFLAGS)])\
-    $(info $(space2)MODULE_CPPFLAGS              [$(__modules.$(module).MODULE_CPPFLAGS)])\
-    $(info $(space2)MODULE_CXXFLAGS              [$(__modules.$(module).MODULE_CXXFLAGS)])\
-    $(info $(space2)MODULE_DEPS                  [$(__modules.$(module).MODULE_DEPS)])\
-    $(info $(space2)MODULE_EXPORT_HEADERS        [$(__modules.$(module).MODULE_EXPORT_HEADERS)])\
-    $(info $(space2)MODULE_EXPORT_HEADERS_PREFIX [$(__modules.$(module).MODULE_EXPORT_HEADERS_PREFIX)])\
-    $(info $(space2)MODULE_LDFLAGS               [$(__modules.$(module).MODULE_LDFLAGS)])\
-    $(info $(space2)MODULE_LDLIBS                [$(__modules.$(module).MODULE_LDLIBS)])\
-    $(info $(space2)MODULE_LIBRARIES             [$(__modules.$(module).MODULE_LIBRARIES)])\
-    $(info $(space2)MODULE_OBJS                  [$(__modules.$(module).MODULE_OBJS)])\
-    $(info $(space2)MODULE_PATH                  [$(__modules.$(module).MODULE_PATH)])\
-    $(info $(space2)MODULE_SOURCE_FILES          [$(__modules.$(module).MODULE_SOURCE_FILES)])\
-    $(info $(space2)MODULE_TARGET                [$(__modules.$(module).MODULE_TARGET)])\
-    $(info $(space2)MODULE_TYPE                  [$(__modules.$(module).MODULE_TYPE)])\
+  $(foreach name,$(__all_modules),\
+    $(info $(name))\
+    $(info $(space2)MODULE_CFLAGS                [$(__modules.$(name).MODULE_CFLAGS)])\
+    $(info $(space2)MODULE_CPPFLAGS              [$(__modules.$(name).MODULE_CPPFLAGS)])\
+    $(info $(space2)MODULE_CXXFLAGS              [$(__modules.$(name).MODULE_CXXFLAGS)])\
+    $(info $(space2)MODULE_DEPS                  [$(__modules.$(name).MODULE_DEPS)])\
+    $(info $(space2)MODULE_EXPORT_HEADERS        [$(__modules.$(name).MODULE_EXPORT_HEADERS)])\
+    $(info $(space2)MODULE_EXPORT_HEADERS_PREFIX [$(__modules.$(name).MODULE_EXPORT_HEADERS_PREFIX)])\
+    $(info $(space2)MODULE_LDFLAGS               [$(__modules.$(name).MODULE_LDFLAGS)])\
+    $(info $(space2)MODULE_LDLIBS                [$(__modules.$(name).MODULE_LDLIBS)])\
+    $(info $(space2)MODULE_LIBRARIES             [$(__modules.$(name).MODULE_LIBRARIES)])\
+    $(info $(space2)MODULE_OBJS                  [$(__modules.$(name).MODULE_OBJS)])\
+    $(info $(space2)MODULE_PATH                  [$(__modules.$(name).MODULE_PATH)])\
+    $(info $(space2)MODULE_SOURCE_FILES          [$(__modules.$(name).MODULE_SOURCE_FILES)])\
+    $(info $(space2)MODULE_TARGET                [$(__modules.$(name).MODULE_TARGET)])\
+    $(info $(space2)MODULE_TYPE                  [$(__modules.$(name).MODULE_TYPE)])\
   )
