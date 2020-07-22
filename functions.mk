@@ -611,18 +611,18 @@ list-modules =\
   $(info )\
   $(foreach module,$(__all_modules),\
     $(info $(module))\
-    $(info $(space2)MODULE_CFLAGS           [$(__modules.$(module).MODULE_CFLAGS)])\
-    $(info $(space2)MODULE_CPPFLAGS         [$(__modules.$(module).MODULE_CPPFLAGS)])\
-    $(info $(space2)MODULE_CXXFLAGS         [$(__modules.$(module).MODULE_CXXFLAGS)])\
-    $(info $(space2)MODULE_DEPS             [$(__modules.$(module).MODULE_DEPS)])\
+    $(info $(space2)MODULE_CFLAGS                [$(__modules.$(module).MODULE_CFLAGS)])\
+    $(info $(space2)MODULE_CPPFLAGS              [$(__modules.$(module).MODULE_CPPFLAGS)])\
+    $(info $(space2)MODULE_CXXFLAGS              [$(__modules.$(module).MODULE_CXXFLAGS)])\
+    $(info $(space2)MODULE_DEPS                  [$(__modules.$(module).MODULE_DEPS)])\
     $(info $(space2)MODULE_EXPORT_HEADERS        [$(__modules.$(module).MODULE_EXPORT_HEADERS)])\
     $(info $(space2)MODULE_EXPORT_HEADERS_PREFIX [$(__modules.$(module).MODULE_EXPORT_HEADERS_PREFIX)])\
-    $(info $(space2)MODULE_LDFLAGS          [$(__modules.$(module).MODULE_LDFLAGS)])\
-    $(info $(space2)MODULE_LDLIBS           [$(__modules.$(module).MODULE_LDLIBS)])\
-    $(info $(space2)MODULE_OBJS             [$(__modules.$(module).MODULE_OBJS)])\
-    $(info $(space2)MODULE_PATH             [$(__modules.$(module).MODULE_PATH)])\
-    $(info $(space2)MODULE_LIBRARIES        [$(__modules.$(module).MODULE_LIBRARIES)])\
-    $(info $(space2)MODULE_SOURCE_FILES     [$(__modules.$(module).MODULE_SOURCE_FILES)])\
-    $(info $(space2)MODULE_TARGET           [$(__modules.$(module).MODULE_TARGET)])\
-    $(info $(space2)MODULE_TYPE             [$(__modules.$(module).MODULE_TYPE)])\
+    $(info $(space2)MODULE_LDFLAGS               [$(__modules.$(module).MODULE_LDFLAGS)])\
+    $(info $(space2)MODULE_LDLIBS                [$(__modules.$(module).MODULE_LDLIBS)])\
+    $(info $(space2)MODULE_LIBRARIES             [$(__modules.$(module).MODULE_LIBRARIES)])\
+    $(info $(space2)MODULE_OBJS                  [$(__modules.$(module).MODULE_OBJS)])\
+    $(info $(space2)MODULE_PATH                  [$(__modules.$(module).MODULE_PATH)])\
+    $(info $(space2)MODULE_SOURCE_FILES          [$(__modules.$(module).MODULE_SOURCE_FILES)])\
+    $(info $(space2)MODULE_TARGET                [$(__modules.$(module).MODULE_TARGET)])\
+    $(info $(space2)MODULE_TYPE                  [$(__modules.$(module).MODULE_TYPE)])\
   )
