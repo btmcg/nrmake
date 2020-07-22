@@ -29,9 +29,12 @@ $(eval $(call build-rules,$(call get-all-modules)))
 # ----------------------------------------------------------------------
 
 # necessary targets and phony targets
-.PHONY: all benchmark clean distclean format list-modules tags test tidy $(call get-all-modules)
+.PHONY: all benchmark clean dist distclean format list-modules tags test tidy $(call get-all-modules)
 
 all: $(call get-all-modules)
+
+dist: all | $(INC_DIR)
+	$(make-dist)
 
 clean:
 	$(if $(wildcard $(call get-all-targets) $(call get-all-objs) $(call get-all-deps)),\
@@ -41,6 +44,8 @@ clean:
 distclean: clean
 	$(if $(wildcard $(LIB_DIR)),\
 		$(RM) $(LIB_DIR)/* && $(RMDIR) $(LIB_DIR))
+	$(if $(wildcard $(INC_DIR)),\
+		$(RM_RF) $(INC_DIR))
 	$(if $(wildcard $(BIN_DIR)),\
 		$(RM) $(BIN_DIR)/* && $(RMDIR) $(BIN_DIR))
 
@@ -66,6 +71,9 @@ list-modules:
 
 $(BIN_DIR):
 	$(MKDIR) $(BIN_DIR)
+
+$(INC_DIR):
+	$(MKDIR) $(INC_DIR)
 
 $(LIB_DIR):
 	$(MKDIR) $(LIB_DIR)

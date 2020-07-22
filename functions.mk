@@ -10,6 +10,8 @@ modules-locals := \
   MODULE_CPPFLAGS \
   MODULE_CXXFLAGS \
   MODULE_DEPS \
+  MODULE_EXPORT_HEADERS \
+  MODULE_EXPORT_HEADERS_PREFIX \
   MODULE_LDFLAGS \
   MODULE_LDLIBS \
   MODULE_LIBRARIES \
@@ -227,10 +229,18 @@ _add-module =\
   ,\
     $(eval __local_src := $(wildcard $(MODULE_PATH)/*.cpp $(MODULE_PATH)/*.c))\
   )\
+  $(if $(MODULE_EXPORT_HEADERS),\
+    $(if $(MODULE_EXPORT_HEADERS_PREFIX),\
+      $(eval __modules.$1.MODULE_EXPORT_HEADERS_PREFIX := $(MODULE_EXPORT_HEADERS_PREFIX))\
+    ,\
+      $(eval __modules.$1.MODULE_EXPORT_HEADERS_PREFIX := $(subst src/,,$(MODULE_PATH)))\
+    )\
+  )\
   $(eval __modules.$1.MODULE_CFLAGS       += $(MODULE_CFLAGS))\
   $(eval __modules.$1.MODULE_CPPFLAGS     += $(MODULE_CPPFLAGS))\
   $(eval __modules.$1.MODULE_CXXFLAGS     += $(MODULE_CXXFLAGS))\
   $(eval __modules.$1.MODULE_DEPS         += $(call convert-c-cpp-suffix-to,$(__local_src),d))\
+  $(eval __modules.$1.MODULE_EXPORT_HEADERS := $(addprefix $(MODULE_PATH)/,$(MODULE_EXPORT_HEADERS)))\
   $(eval __modules.$1.MODULE_LDFLAGS      += $(MODULE_LDFLAGS))\
   $(eval __modules.$1.MODULE_LDLIBS       += $(addprefix -l,$(MODULE_LIBRARIES)) $(MODULE_LDLIBS))\
   $(eval __modules.$1.MODULE_OBJS         += $(call convert-c-cpp-suffix-to,$(__local_src),o))\
@@ -558,6 +568,32 @@ cmd-clang-tidy =\
   $(__modules.$1.MODULE_CXXFLAGS)
 
 
+# ----------------------------------------------------------------------
+# function : make-dist
+# arguments: none
+# returns  : nothing
+# usage    : $(call cmd-clang-tidy,<module_name>)
+# rationale: copies exported headers to include directory and creates a
+#            tarball with bin, include, and lib directories ready for
+#            distribution
+# ----------------------------------------------------------------------
+make-dist =\
+  $(foreach name,$(__all_modules),\
+    $(if $(__modules.$(name).MODULE_EXPORT_HEADERS),\
+      $(eval __dest_dir := $(INC_DIR)/$(__modules.$(name).MODULE_EXPORT_HEADERS_PREFIX))\
+      $(\n)\
+      $(MKDIR) $(__dest_dir)\
+      $(\n)\
+      $(CP) $(__modules.$(name).MODULE_EXPORT_HEADERS) $(__dest_dir)\
+      $(eval undefine __dest_dir)\
+    )\
+  )\
+  $(\n)\
+  $(CP) $(VERSION_FILE) $(INC_DIR)\
+  $(\n)\
+  $(TAR) --create --transform='s,^,$(shell basename $$(pwd))/,' --file=$(shell basename $$(pwd)).tar.zst  $(BIN_DIR) $(LIB_DIR) $(INC_DIR)
+
+
 # debugging functions
 # ----------------------------------------------------------------------
 
@@ -579,6 +615,8 @@ list-modules =\
     $(info $(space2)MODULE_CPPFLAGS         [$(__modules.$(module).MODULE_CPPFLAGS)])\
     $(info $(space2)MODULE_CXXFLAGS         [$(__modules.$(module).MODULE_CXXFLAGS)])\
     $(info $(space2)MODULE_DEPS             [$(__modules.$(module).MODULE_DEPS)])\
+    $(info $(space2)MODULE_EXPORT_HEADERS        [$(__modules.$(module).MODULE_EXPORT_HEADERS)])\
+    $(info $(space2)MODULE_EXPORT_HEADERS_PREFIX [$(__modules.$(module).MODULE_EXPORT_HEADERS_PREFIX)])\
     $(info $(space2)MODULE_LDFLAGS          [$(__modules.$(module).MODULE_LDFLAGS)])\
     $(info $(space2)MODULE_LDLIBS           [$(__modules.$(module).MODULE_LDLIBS)])\
     $(info $(space2)MODULE_OBJS             [$(__modules.$(module).MODULE_OBJS)])\

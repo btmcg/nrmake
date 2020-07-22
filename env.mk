@@ -13,9 +13,10 @@
 SHELL := /bin/sh
 
 
-# output directories
+# output/dist directories
 # ----------------------------------------------------------------------
 BIN_DIR := bin
+INC_DIR := include
 LIB_DIR := lib
 
 
@@ -39,6 +40,8 @@ MKDIR   := mkdir --parents
 MV      := mv --force
 RM      := rm --force
 RMDIR   := rmdir
+RM_RF   := rm --force --recursive
+TAR     := tar
 TIDY    := clang-tidy
 
 
