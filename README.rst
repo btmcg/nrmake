@@ -42,7 +42,7 @@ submodule. From your project's root directory, do the following:
     cd nrmake
     git checkout v2.0.3
     cd ..
-    cp nrmake/example_makefile Makefile
+    ln --relative --symbolic nrmake/Makefile
 
 Then add ``Module.mk`` files to the directory of each executable or
 library you would like to build. See the example one-line file cited
