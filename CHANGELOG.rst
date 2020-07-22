@@ -1,3 +1,9 @@
+2.0.3 - 2020-07-21
+------------------
+* Add ``*.c`` and ``*.cpp`` files in the local directory to
+  ``MODULE_SOURCE_FILES`` if the variable is not defined explicitly.
+
+
 2.0.2 - 2020-07-21
 ------------------
 * Fix the ``format`` target. Again.
