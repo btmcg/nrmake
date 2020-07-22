@@ -248,6 +248,7 @@ _add-module =\
   $(eval __modules.$1.MODULE_LIBRARIES      := $(MODULE_LIBRARIES))\
   $(eval __modules.$1.MODULE_SOURCE_FILES   := $(__local_src))\
   $(eval __all_modules += $1)\
+  $(eval undefine __local_src)\
   $(call clear-vars)
 
 
