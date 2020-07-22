@@ -225,7 +225,7 @@ _add-module =\
   $(if $(MODULE_SOURCE_FILES),\
     $(eval __local_src := $(addprefix $(MODULE_PATH)/,$(MODULE_SOURCE_FILES)))\
   ,\
-    $(eval __local_src := $(wildcard $(MODULE_PATH)/*.cpp))\
+    $(eval __local_src := $(wildcard $(MODULE_PATH)/*.cpp $(MODULE_PATH)/*.c))\
   )\
   $(eval __modules.$1.MODULE_CFLAGS       += $(MODULE_CFLAGS))\
   $(eval __modules.$1.MODULE_CPPFLAGS     += $(MODULE_CPPFLAGS))\
