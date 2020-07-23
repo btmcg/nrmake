@@ -9,7 +9,7 @@
 # delete the target if a recipe fails with a non-zero status
 .DELETE_ON_ERROR:
 
-# standardize on good ol' Bourne shell
+# rely on standardized POSIX shell
 SHELL := /bin/sh
 
 
@@ -19,7 +19,7 @@ BIN_DIR := bin
 INC_DIR := include
 LIB_DIR := lib
 PACKAGE_NAME := $(shell basename $$(pwd))
-PACKAGE_EXT := .tar.zst
+PACKAGE_EXT := .tar.gz
 
 
 # settings due to cmd-line-specified targets
