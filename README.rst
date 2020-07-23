@@ -150,9 +150,13 @@ Default targets
     code, dependency files, libraries, and executables. Top-level
     ``bin/`` and ``lib/`` directories are preserved.
 
+``dist``
+    Create a tarball for distribution. All files in ``bin/``,
+    ``include/``, and ``lib/`` will be included.
+
 ``distclean``
-    Removes ``bin/`` and ``lib/``, as well as everything that ``clean``
-    does.
+    Calls ``clean`` and additionally removes ``bin/``, ``lib/``, and
+    ``include/`` directories.
 
 ``format``
     Runs ``clang-format`` on ``src/``, ``test/``, and ``benchmark/``
