@@ -18,7 +18,7 @@ SHELL := /bin/sh
 BIN_DIR := bin
 INC_DIR := include
 LIB_DIR := lib
-PACKAGE_NAME := $(shell basename $$(pwd))
+PACKAGE_NAME = $(shell basename $$(pwd))-$(VERSION)
 PACKAGE_EXT := .tar.gz
 
 
