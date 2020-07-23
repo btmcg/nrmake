@@ -5,10 +5,10 @@
 
 GIT := /usr/bin/git
 VERSION := $(shell $(GIT) describe --abbrev=4 --always --dirty --tags)
-VERSION_FILE := src/version.hpp
+VERSION_FILE := src/version.h
 
 $(VERSION_FILE): .git/HEAD .git/index
-	@printf "#pragma once\nconstexpr char const* VERSION = \"$(VERSION)\";" > $@
+	@printf "#pragma once\nchar const* VERSION = \"$(VERSION)\";" > $@
 
 # make sure the file is a dependency of all targets, so it is always
 # built and there aren't any include errors
