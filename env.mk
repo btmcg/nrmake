@@ -13,11 +13,13 @@
 SHELL := /bin/sh
 
 
-# output/dist directories
+# distribution
 # ----------------------------------------------------------------------
 BIN_DIR := bin
 INC_DIR := include
 LIB_DIR := lib
+PACKAGE_NAME := $(shell basename $$(pwd))
+PACKAGE_EXT := .tar.zst
 
 
 # settings due to cmd-line-specified targets

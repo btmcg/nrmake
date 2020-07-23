@@ -592,7 +592,7 @@ make-dist =\
   $(\n)\
   $(CP) $(VERSION_FILE) $(INC_DIR)\
   $(\n)\
-  $(TAR) --create --transform='s,^,$(shell basename $$(pwd))/,' --file=$(shell basename $$(pwd)).tar.zst  $(BIN_DIR) $(LIB_DIR) $(INC_DIR)
+  $(TAR) --create --transform='s,^,$(PACKAGE_NAME)/,' --file=$(PACKAGE_NAME)$(PACKAGE_EXT) $(BIN_DIR) $(LIB_DIR) $(INC_DIR)
 
 
 # debugging functions
