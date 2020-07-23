@@ -52,6 +52,22 @@
 # Default: <file>.d dependency files created by using compiler features
 # such as -MMD.
 
+# MODULE_EXPORT_HEADERS
+# Names of header files to be distributed with the package created by
+# ``make dist``. These files will be copied to
+# ``<root>/include/$(MODULE_EXPORT_HEADERS_PREFIX)``.
+# Example: header1.h header2.hpp
+# Default: empty
+
+# MODULE_EXPORT_HEADERS_PREFIX
+# The path under ``include/`` for the headers to be placed, if it
+# differs from the current path from ``src/``. For example, if the
+# header path is currently ``src/mylib/plugins/header1.hpp``, then the
+# default path it will be copied to for distribution is
+# ``<root>/include/mylib/plugins/header1.hpp``.
+# Example: my/new/path
+# Default: current path, with "src" replaced by "include"
+
 # MODULE_LDFLAGS
 # Flags to be passed to the linker. This should contain any LDFLAGS
 # necessary for linking this particular module.
@@ -89,4 +105,4 @@
 # This should contain the name of all source files to be compiled.
 # Example: $(call rwildcard,$(call get-path),*.cpp) which will populate
 # the variable with all cpp files in every subdirectory of the module.
-# Default: *.cpp
+# Default: *.cpp *.c
