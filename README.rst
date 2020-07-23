@@ -40,7 +40,7 @@ submodule. From your project's root directory, do the following:
 
     git submodule add -- https://gitlab.com/btmcg/nrmake.git
     cd nrmake
-    git checkout v2.0.3
+    git checkout v2.1.0
     cd ..
     ln --relative --symbolic nrmake/Makefile
 
@@ -76,6 +76,9 @@ Project structure
 
 ``<root>/bin/``
     Final location of all of the project's compiled executables.
+
+``<root>/include/``
+    Final location of all of the project's exported headers.
 
 ``<root>/lib/``
     Final location of all of the project's compiled libraries.
@@ -116,6 +119,10 @@ Example usage
 ``make -j``
     Builds the project using ``gcc`` with full optimizations and places
     all binaries and libraries in ``bin/`` and ``lib/``.
+
+``make dist``
+    Generate a distributable tarball package containing ``bin``,
+    ``include``, and ``lib``. It will be placed in the root directory.
 
 ``make COMPILER=clang DEBUG=1 -j``
     Builds the project using clang with optimizations turned off (and

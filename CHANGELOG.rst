@@ -1,3 +1,22 @@
+2.1.0 - 2020-07-23
+------------------
+* Support ``dist`` target, which will create a tarball containing the
+  ``bin``, ``include``, and ``lib`` directories. The package name is
+  named after the root directory with the version appended. The default
+  compression is gzip, e.g., ``my_app-v1.0.0.tar.gz``
+* Add ``MODULE_EXPORT_HEADERS`` and ``MODULE_EXPORT_HEADERS_PREFIX`` to
+  allow the distribution of headers with the binaries and libraries. Any
+  headers listed will be copied to the specified prefix path under
+  ``<root>/include``.
+* Replace ``version.hpp`` with ``version.h`` and remove ``constexpr``
+  for better C support.
+* Fix ``RUNPATH`` to use ``$ORIGIN`` so that package binaries continue
+  to find libraries.
+* Rename ``example_makefile`` to ``Makefile`` so that users can more
+  easily symlink to it from their own project. Plus, it's not just an
+  example, it is fully-functional.
+
+
 2.0.3 - 2020-07-21
 ------------------
 * Add ``*.c`` and ``*.cpp`` files in the local directory to
