@@ -1,6 +1,7 @@
 2.x.x -
 ------------------
 * Include .c and .h files in ``format`` target.
+* Exclude ``benchmark-runner`` and ``test-runner`` from dist tarball.
 
 
 2.1.1 - 2020-07-23
