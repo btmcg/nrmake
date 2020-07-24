@@ -50,9 +50,9 @@ distclean: clean
 		$(RM) $(LIB_DIR)/* && $(RMDIR) $(LIB_DIR))
 
 format:
-	@[ ! -d src       ] || find src       -type f \( -name '*.hpp' -o -name '*.cpp' \) -exec $(FORMAT) {} \;
-	@[ ! -d test      ] || find test      -type f \( -name '*.hpp' -o -name '*.cpp' \) -exec $(FORMAT) {} \;
-	@[ ! -d benchmark ] || find benchmark -type f \( -name '*.hpp' -o -name '*.cpp' \) -exec $(FORMAT) {} \;
+	@[ ! -d src       ] || find src       -type f -regex ".*\.[ch]\(pp\)?$$" -exec $(FORMAT) {} \;
+	@[ ! -d test      ] || find test      -type f -regex ".*\.[ch]\(pp\)?$$" -exec $(FORMAT) {} \;
+	@[ ! -d benchmark ] || find benchmark -type f -regex ".*\.[ch]\(pp\)?$$" -exec $(FORMAT) {} \;
 
 tags:
 	ctags --recurse src
