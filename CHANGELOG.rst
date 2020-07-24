@@ -1,3 +1,8 @@
+2.x.x -
+------------------
+* Include .c and .h files in ``format`` target.
+
+
 2.1.1 - 2020-07-23
 ------------------
 * Go back on idea to move bins and libs to dist directories because it
