@@ -1,3 +1,9 @@
+2.1.1 - 2020-07-23
+------------------
+* Go back on idea to move bins and libs to dist directories because it
+  will force a re-build in the current state. Continue to just copy.
+
+
 2.1.0 - 2020-07-23
 ------------------
 * Support ``dist`` target, which will create a tarball containing the
