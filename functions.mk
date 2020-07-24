@@ -362,7 +362,7 @@ define build-executable
 $(__modules.$1.MODULE_TARGET): __build_cmd := $$(call cmd-build,$1)
 $(__modules.$1.MODULE_TARGET):
 	$$(__build_cmd)
-	$(MV) $(__modules.$1.MODULE_TARGET) $(BIN_DIR)/$(notdir $(__modules.$1.MODULE_TARGET))
+	$(CP) $(__modules.$1.MODULE_TARGET) $(BIN_DIR)/$(notdir $(__modules.$1.MODULE_TARGET))
 
 endef
 
@@ -378,7 +378,7 @@ define build-shared-library
 $(__modules.$1.MODULE_TARGET): __build_cmd := $$(call cmd-build,$1)
 $(__modules.$1.MODULE_TARGET):
 	$$(__build_cmd)
-	$(MV) $(__modules.$1.MODULE_TARGET) $(LIB_DIR)/$(notdir $(__modules.$1.MODULE_TARGET))
+	$(CP) $(__modules.$1.MODULE_TARGET) $(LIB_DIR)/$(notdir $(__modules.$1.MODULE_TARGET))
 
 endef
 
@@ -394,7 +394,7 @@ define build-static-library
 $(__modules.$1.MODULE_TARGET): __build_cmd := $$(call cmd-build-static-library,$1)
 $(__modules.$1.MODULE_TARGET):
 	$$(__build_cmd)
-	$(MV) $(__modules.$1.MODULE_TARGET) $(LIB_DIR)/$(notdir $(__modules.$1.MODULE_TARGET))
+	$(CP) $(__modules.$1.MODULE_TARGET) $(LIB_DIR)/$(notdir $(__modules.$1.MODULE_TARGET))
 
 endef
 
