@@ -1,7 +1,10 @@
-2.x.x -
+2.1.2 - 2020-07-26
 ------------------
 * Include .c and .h files in ``format`` target.
 * Exclude ``benchmark-runner`` and ``test-runner`` from dist tarball.
+* Define ``ROOT_DIR`` and ``PROJECT`` variables.
+* Improve ``load-modules`` to avoid any variable cross-pollution between
+  modules.
 
 
 2.1.1 - 2020-07-23
