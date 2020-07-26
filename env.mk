@@ -56,31 +56,31 @@ TIDY    := clang-tidy
 TARGET_ARCH := -march=native
 
 # c/c++ warning flags
-WARN := \
-  -pedantic-errors \
-  -Wall \
-  -Wcast-align \
-  -Wcast-qual \
-  -Wdisabled-optimization \
-  -Wempty-body \
-  -Werror \
-  -Wextra \
-  -Wfloat-equal \
-  -Wformat=2 \
-  -Wmissing-include-dirs \
+WARN :=                        \
+  -pedantic-errors             \
+  -Wall                        \
+  -Wcast-align                 \
+  -Wcast-qual                  \
+  -Wdisabled-optimization      \
+  -Wempty-body                 \
+  -Werror                      \
+  -Wextra                      \
+  -Wfloat-equal                \
+  -Wformat=2                   \
+  -Wmissing-include-dirs       \
   -Wno-deprecated-declarations \
-  -Wundef \
+  -Wundef                      \
   -Wuninitialized
 
 # c-specific warning flags
 CC_WARN :=
 
 # c++-specific warning flags
-CXX_WARN := \
-  -fno-operator-names \
-  -Wctor-dtor-privacy \
-  -Wnon-virtual-dtor \
-  -Woverloaded-virtual \
+CXX_WARN :=                       \
+  -fno-operator-names             \
+  -Wctor-dtor-privacy             \
+  -Wnon-virtual-dtor              \
+  -Woverloaded-virtual            \
   -Wzero-as-null-pointer-constant
 
 # sanitizer options

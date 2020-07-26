@@ -17,7 +17,7 @@ ifeq ($(COMPILER),gcc)
 else
   GOOGLE_BENCHMARK := third_party/google-benchmark-clang/1.5.1
 endif
-use-google-benchmark =\
-  $(eval MODULE_CPPFLAGS += -isystem$(GOOGLE_BENCHMARK)/include)\
-  $(eval MODULE_LDFLAGS += -L$(GOOGLE_BENCHMARK)/lib -Wl,-rpath -Wl,$(GOOGLE_BENCHMARK)/lib)\
+use-google-benchmark =                                                                       \
+  $(eval MODULE_CPPFLAGS += -isystem$(GOOGLE_BENCHMARK)/include)                             \
+  $(eval MODULE_LDFLAGS += -L$(GOOGLE_BENCHMARK)/lib -Wl,-rpath -Wl,$(GOOGLE_BENCHMARK)/lib) \
   $(eval MODULE_LDLIBS += -lbenchmark)

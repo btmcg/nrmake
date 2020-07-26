@@ -10,15 +10,15 @@
 # library) and provide the path. The following line is all that is
 # required to create a c or c++ executable.
 #
-#     $(call add-executable-module,$(call get-path))
+#     $(call add-executable-module,$(get-path))
 #
 # for a shared library:
 #
-#     $(call add-shared-library-module,$(call get-path))
+#     $(call add-shared-library-module,$(get-path))
 #
 # and for a static library:
 #
-#     $(call add-static-library-module,$(call get-path))
+#     $(call add-static-library-module,$(get-path))
 
 
 # Acceptable variables:
@@ -93,7 +93,7 @@
 # be different than the basename of the path defined by calling
 # get-path.
 # Example: mymodule
-# Default: basename of $(call get-path)
+# Default: basename of $(get-path)
 
 # MODULE_OBJS
 # This should contain the names of the object files to be created as a
@@ -103,6 +103,6 @@
 
 # MODULE_SOURCE_FILES
 # This should contain the name of all source files to be compiled.
-# Example: $(call rwildcard,$(call get-path),*.cpp) which will populate
+# Example: $(call rwildcard,$(get-path),*.cpp) which will populate
 # the variable with all cpp files in every subdirectory of the module.
 # Default: *.cpp *.c

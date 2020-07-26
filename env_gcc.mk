@@ -34,8 +34,8 @@ WARN +=
 CC_WARN +=
 
 # c++-specific warning flags
-CXX_WARN += \
+CXX_WARN +=               \
   -Wsuggest-final-methods \
-  -Wsuggest-final-types \
-  -Wsuggest-override \
+  -Wsuggest-final-types   \
+  -Wsuggest-override      \
   -Wuseless-cast
