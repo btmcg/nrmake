@@ -39,7 +39,8 @@ dist: all | $(INC_DIR)
 clean:
 	$(if $(wildcard $(get-all-targets) $(get-all-objs) $(get-all-deps)),\
 		$(RM) $(strip $(get-all-targets)) $(get-all-objs) $(get-all-deps))
-	$(if $(wildcard $(VERSION_FILE)),$(RM) $(VERSION_FILE))
+	$(if $(wildcard $(VERSION_FILE)),\
+		$(RM) $(VERSION_FILE))
 
 distclean: clean
 	$(if $(wildcard $(BIN_DIR)),\
