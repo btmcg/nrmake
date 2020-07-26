@@ -25,7 +25,7 @@ modules-locals := \
 # ----------------------------------------------------------------------
 # function : get-path
 # returns  : the path of the current file
-# usage    : $(call get-path)
+# usage    : $(get-path)
 # ----------------------------------------------------------------------
 get-path = $(patsubst %/,%,$(dir $(lastword $(MAKEFILE_LIST))))
 
@@ -149,17 +149,22 @@ get-all-targets =\
 # ----------------------------------------------------------------------
 # function : load-modules
 # returns  : nothing
-# usage    : $(call load-modules)
+# usage    : $(load-modules)
 # rationale: Initialization function for this build system. This
 #            function simply includes all of the necessary Module.mk
 #            files which provide the foundation for all of the pieces of
 #            data needed to put together rules and recipes.
 # note     : The default goal "all" needs to be declared here (before
-#            any other goals) so that it is considered the main goal.
+#            any other goals) so that it is considered the default.
 # ----------------------------------------------------------------------
 load-modules =\
   $(eval all:)\
-  $(eval include $(shell find . -name "Module.mk"))
+  $(info PROJECT=$(PROJECT))\
+  $(info ROOT_DIR=$(ROOT_DIR))\
+  $(foreach mk_include,$(filter-out third_party/%,$(call rwildcard,$(ROOT_DIR),*/Module.mk)),\
+    $(eval include $(mk_include))\
+    $(clear-vars)\
+  )
 
 
 # ----------------------------------------------------------------------

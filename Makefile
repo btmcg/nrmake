@@ -8,7 +8,7 @@ include nrmake/third_party.mk
 # ----------------------------------------------------------------------
 
 # load modules (any subdirectory that contains a "Module.mk" file)
-$(call load-modules)
+$(load-modules)
 
 
 # binary versioning

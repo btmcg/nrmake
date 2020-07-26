@@ -12,13 +12,17 @@
 # rely on standardized POSIX shell
 SHELL := /bin/sh
 
+# root-directory of project; considered the project name
+ROOT_DIR := $(realpath $(dir $(dir $(realpath $(firstword $(MAKEFILE_LIST))))../))
+PROJECT  := $(notdir $(ROOT_DIR))
+
 
 # distribution
 # ----------------------------------------------------------------------
 BIN_DIR := bin
 INC_DIR := include
 LIB_DIR := lib
-PACKAGE_NAME = $(shell basename $$(pwd))-$(VERSION)
+PACKAGE_NAME = $(PROJECT)-$(VERSION)
 PACKAGE_EXT := .tar.gz
 
 
