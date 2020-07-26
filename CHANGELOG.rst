@@ -1,3 +1,9 @@
+2.1.3 - 2020-07-26
+------------------
+* Only display ``PROJECT`` and ``ROOT_DIR`` when running ``make
+  list-modules``.
+
+
 2.1.2 - 2020-07-26
 ------------------
 * Include .c and .h files in ``format`` target.

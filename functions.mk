@@ -159,8 +159,6 @@ get-all-targets =\
 # ----------------------------------------------------------------------
 load-modules =\
   $(eval all:)\
-  $(info PROJECT=$(PROJECT))\
-  $(info ROOT_DIR=$(ROOT_DIR))\
   $(foreach mk_include,$(filter-out third_party/%,$(call rwildcard,$(ROOT_DIR),*/Module.mk)),\
     $(eval include $(mk_include))\
     $(clear-vars)\
@@ -610,6 +608,8 @@ make-dist =\
 # rationale: Useful for debugging. Prints all fields of all modules.
 # ----------------------------------------------------------------------
 list-modules =\
+  $(info PROJECT=$(PROJECT))\
+  $(info ROOT_DIR=$(ROOT_DIR))\
   $(info modules [$(__all_modules)])\
   $(info targets [$(call get-all-targets)])\
   $(info deps    [$(call get-all-deps)])\
