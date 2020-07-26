@@ -21,7 +21,7 @@ Example ``Module.mk``
 
 .. code-block:: make
 
-    $(call add-executable-module,$(call get-path))
+    $(call add-executable-module,$(get-path))
 
 
 This builds an executable with the same name as the directory and puts
