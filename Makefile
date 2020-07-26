@@ -22,23 +22,23 @@ include nrmake/version.mk
 # ----------------------------------------------------------------------
 
 # generate all necessary rules
-$(eval $(call build-rules,$(call get-all-modules)))
+$(eval $(call build-rules,$(get-all-modules)))
 
 
 # recipes
 # ----------------------------------------------------------------------
 
 # necessary targets and phony targets
-.PHONY: all benchmark clean dist distclean format list-modules tags test tidy $(call get-all-modules)
+.PHONY: all benchmark clean dist distclean format list-modules tags test tidy $(get-all-modules)
 
-all: $(call get-all-modules)
+all: $(get-all-modules)
 
 dist: all | $(INC_DIR)
 	$(make-dist)
 
 clean:
-	$(if $(wildcard $(call get-all-targets) $(call get-all-objs) $(call get-all-deps)),\
-		$(RM) $(strip $(call get-all-targets)) $(call get-all-objs) $(call get-all-deps))
+	$(if $(wildcard $(get-all-targets) $(get-all-objs) $(get-all-deps)),\
+		$(RM) $(strip $(get-all-targets)) $(get-all-objs) $(get-all-deps))
 	$(if $(wildcard $(VERSION_FILE)),$(RM) $(VERSION_FILE))
 
 distclean: clean
