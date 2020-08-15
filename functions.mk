@@ -262,7 +262,10 @@ _add-module =                                                                   
 build-module-rules =                                  \
   $(eval __modules.$1.MODULE_LDFLAGS += -L$(LIB_DIR)) \
   $(eval $1: $(__modules.$1.MODULE_TARGET))           \
-  $(eval $1: $(__modules.$1.MODULE_PATH)/Module.mk)
+  $(eval $(__modules.$1.MODULE_TARGET): $(__modules.$1.MODULE_PATH/Module.mk))        \
+  $(foreach other_module,$(__modules.$1.MODULE_LIBRARIES),                            \
+    $(eval $(__modules.$1.MODULE_TARGET): $(__modules.$(other_module).MODULE_TARGET)) \
+  )
 
 
 # ----------------------------------------------------------------------
@@ -273,13 +276,10 @@ build-module-rules =                                  \
 # rationale: generates rules for module's MODULE_TARGET
 # ----------------------------------------------------------------------
 build-local-target-rules =                                                                    \
-  $(eval $(__modules.$1.MODULE_TARGET): $(__modules.$1.MODULE_OBJS))                          \
-  $(eval $(__modules.$1.MODULE_TARGET): $(__modules.$1.MODULE_PATH)/Module.mk)                \
-  $(eval $(__modules.$1.MODULE_TARGET):| $(BIN_DIR) $(LIB_DIR))                               \
-  $(foreach other_module,$(__modules.$1.MODULE_LIBRARIES),                                    \
-    $(eval $(__modules.$1.MODULE_TARGET): $(__modules.$(other_module).MODULE_TARGET))         \
-    $(eval $(__modules.$1.MODULE_TARGET): $(__modules.$(other_module).MODULE_PATH)/Module.mk) \
-  )
+  $(eval $(__modules.$1.MODULE_TARGET): | $(BIN_DIR) $(LIB_DIR))                              \
+  $(eval $(__modules.$1.MODULE_TARGET): $(__modules.$1.MODULE_GENERATED_FILES))               \
+  $(eval $(__modules.$1.MODULE_TARGET): $(__modules.$1.MODULE_OBJS))
+
 
 # ----------------------------------------------------------------------
 # function : build-internal-dependencies
