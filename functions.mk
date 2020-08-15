@@ -223,32 +223,33 @@ add-static-library-module =                                                     
 # rationale: internal function used for common add-module code used by
 #            all of the different module types.
 # ----------------------------------------------------------------------
-_add-module =                                                                                         \
-  $(if $(MODULE_SOURCE_FILES),                                                                        \
-    $(eval __local_src := $(addprefix $(MODULE_PATH)/,$(MODULE_SOURCE_FILES)))                        \
-  ,                                                                                                   \
-    $(eval __local_src := $(wildcard $(MODULE_PATH)/*.cpp $(MODULE_PATH)/*.c))                        \
-  )                                                                                                   \
-  $(if $(MODULE_EXPORT_HEADERS),                                                                      \
-    $(if $(MODULE_EXPORT_HEADERS_PREFIX),                                                             \
-      $(eval __modules.$1.MODULE_EXPORT_HEADERS_PREFIX := $(MODULE_EXPORT_HEADERS_PREFIX))            \
-    ,                                                                                                 \
-      $(eval __modules.$1.MODULE_EXPORT_HEADERS_PREFIX := $(subst src/,,$(MODULE_PATH)))              \
-    )                                                                                                 \
-  )                                                                                                   \
-  $(eval __modules.$1.MODULE_CFLAGS         := $(MODULE_CFLAGS))                                      \
-  $(eval __modules.$1.MODULE_CPPFLAGS       := $(MODULE_CPPFLAGS))                                    \
-  $(eval __modules.$1.MODULE_CXXFLAGS       := $(MODULE_CXXFLAGS))                                    \
-  $(eval __modules.$1.MODULE_DEPS           := $(call convert-c-cpp-suffix-to,$(__local_src),d))      \
-  $(eval __modules.$1.MODULE_EXPORT_HEADERS := $(addprefix $(MODULE_PATH)/,$(MODULE_EXPORT_HEADERS))) \
-  $(eval __modules.$1.MODULE_LDFLAGS        := $(MODULE_LDFLAGS))                                     \
-  $(eval __modules.$1.MODULE_LDLIBS         := $(addprefix -l,$(MODULE_LIBRARIES)) $(MODULE_LDLIBS))  \
-  $(eval __modules.$1.MODULE_LIBRARIES      := $(MODULE_LIBRARIES))                                   \
-  $(eval __modules.$1.MODULE_OBJS           := $(call convert-c-cpp-suffix-to,$(__local_src),o))      \
-  $(eval __modules.$1.MODULE_PATH           := $(MODULE_PATH))                                        \
-  $(eval __modules.$1.MODULE_SOURCE_FILES   := $(__local_src))                                        \
-  $(eval __all_modules += $1)                                                                         \
-  $(eval undefine __local_src)                                                                        \
+_add-module =                                                                                           \
+  $(if $(MODULE_SOURCE_FILES),                                                                          \
+    $(eval __local_src := $(addprefix $(MODULE_PATH)/,$(MODULE_SOURCE_FILES)))                          \
+  ,                                                                                                     \
+    $(eval __local_src := $(wildcard $(MODULE_PATH)/*.cpp $(MODULE_PATH)/*.c))                          \
+  )                                                                                                     \
+  $(if $(MODULE_EXPORT_HEADERS),                                                                        \
+    $(if $(MODULE_EXPORT_HEADERS_PREFIX),                                                               \
+      $(eval __modules.$1.MODULE_EXPORT_HEADERS_PREFIX := $(MODULE_EXPORT_HEADERS_PREFIX))              \
+    ,                                                                                                   \
+      $(eval __modules.$1.MODULE_EXPORT_HEADERS_PREFIX := $(subst src/,,$(MODULE_PATH)))                \
+    )                                                                                                   \
+  )                                                                                                     \
+  $(eval __modules.$1.MODULE_CFLAGS          := $(MODULE_CFLAGS))                                       \
+  $(eval __modules.$1.MODULE_CPPFLAGS        := $(MODULE_CPPFLAGS))                                     \
+  $(eval __modules.$1.MODULE_CXXFLAGS        := $(MODULE_CXXFLAGS))                                     \
+  $(eval __modules.$1.MODULE_DEPS            := $(call convert-c-cpp-suffix-to,$(__local_src),d))       \
+  $(eval __modules.$1.MODULE_EXPORT_HEADERS  := $(addprefix $(MODULE_PATH)/,$(MODULE_EXPORT_HEADERS)))  \
+  $(eval __modules.$1.MODULE_GENERATED_FILES := $(addprefix $(MODULE_PATH)/,$(MODULE_GENERATED_FILES))) \
+  $(eval __modules.$1.MODULE_LDFLAGS         := $(MODULE_LDFLAGS))                                      \
+  $(eval __modules.$1.MODULE_LDLIBS          := $(addprefix -l,$(MODULE_LIBRARIES)) $(MODULE_LDLIBS))   \
+  $(eval __modules.$1.MODULE_LIBRARIES       := $(MODULE_LIBRARIES))                                    \
+  $(eval __modules.$1.MODULE_OBJS            := $(call convert-c-cpp-suffix-to,$(__local_src),o))       \
+  $(eval __modules.$1.MODULE_PATH            := $(MODULE_PATH))                                         \
+  $(eval __modules.$1.MODULE_SOURCE_FILES    := $(__local_src))                                         \
+  $(eval __all_modules += $1)                                                                           \
+  $(eval undefine __local_src)                                                                          \
   $(clear-vars)
 
 
@@ -259,9 +260,9 @@ _add-module =                                                                   
 # usage    : $(call build-module-rules,<module_name>)
 # rationale: generates rules for module
 # ----------------------------------------------------------------------
-build-module-rules =                                  \
-  $(eval __modules.$1.MODULE_LDFLAGS += -L$(LIB_DIR)) \
-  $(eval $1: $(__modules.$1.MODULE_TARGET))           \
+build-module-rules =                                                                  \
+  $(eval __modules.$1.MODULE_LDFLAGS += -L$(LIB_DIR))                                 \
+  $(eval $1: $(__modules.$1.MODULE_TARGET))                                           \
   $(eval $(__modules.$1.MODULE_TARGET): $(__modules.$1.MODULE_PATH/Module.mk))        \
   $(foreach other_module,$(__modules.$1.MODULE_LIBRARIES),                            \
     $(eval $(__modules.$1.MODULE_TARGET): $(__modules.$(other_module).MODULE_TARGET)) \
@@ -275,9 +276,9 @@ build-module-rules =                                  \
 # usage    : $(call build-local-target-rules,<module_name>)
 # rationale: generates rules for module's MODULE_TARGET
 # ----------------------------------------------------------------------
-build-local-target-rules =                                                                    \
-  $(eval $(__modules.$1.MODULE_TARGET): | $(BIN_DIR) $(LIB_DIR))                              \
-  $(eval $(__modules.$1.MODULE_TARGET): $(__modules.$1.MODULE_GENERATED_FILES))               \
+build-local-target-rules =                                                      \
+  $(eval $(__modules.$1.MODULE_TARGET): | $(BIN_DIR) $(LIB_DIR))                \
+  $(eval $(__modules.$1.MODULE_TARGET): $(__modules.$1.MODULE_GENERATED_FILES)) \
   $(eval $(__modules.$1.MODULE_TARGET): $(__modules.$1.MODULE_OBJS))
 
 
