@@ -4,6 +4,8 @@
   file. The ``distclean`` target does this now.
 * Dependency files are built before object files now.
 * Disable all built-in rules and variables.
+* Add ``MODULE_ALIAS`` to assist in dependency (``.d``) detection when
+  specifying a custom ``MODULE_NAME``.
 
 
 2.1.3 - 2020-07-26
