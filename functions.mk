@@ -317,9 +317,9 @@ build-object-rules =                                                            
   $(foreach source,$(__modules.$1.MODULE_SOURCE_FILES),                                                                                                     \
     $(eval $(call convert-c-cpp-suffix-to,$(source),o): $(source) Makefile nrmake/env.mk nrmake/functions.mk nrmake/pattern_rules.mk nrmake/third_party.mk) \
     $(eval $(call convert-c-cpp-suffix-to,$(source),o): $(__modules.$1.MODULE_PATH)/Module.mk)                                                              \
-    $(eval $(call convert-c-cpp-suffix-to,$(source),o): __local_cflags := $$(__modules.$1.MODULE_CFLAGS))                                                   \
-    $(eval $(call convert-c-cpp-suffix-to,$(source),o): __local_cppflags := $$(__modules.$1.MODULE_CPPFLAGS))                                               \
-    $(eval $(call convert-c-cpp-suffix-to,$(source),o): __local_cxxflags := $$(__modules.$1.MODULE_CXXFLAGS))                                               \
+    $(eval $(call convert-c-cpp-suffix-to,$(source),o) $(call convert-c-cpp-suffix-to,$(source),d): __local_cflags := $$(__modules.$1.MODULE_CFLAGS))                                                   \
+    $(eval $(call convert-c-cpp-suffix-to,$(source),o) $(call convert-c-cpp-suffix-to,$(source),d): __local_cppflags := $$(__modules.$1.MODULE_CPPFLAGS))                                               \
+    $(eval $(call convert-c-cpp-suffix-to,$(source),o) $(call convert-c-cpp-suffix-to,$(source),d): __local_cxxflags := $$(__modules.$1.MODULE_CXXFLAGS))                                               \
   )
 
 
@@ -338,7 +338,6 @@ build-rules =                                                       \
     $(call build-local-target-rules,$(name))                        \
     $(call build-internal-dependencies,$(name))                     \
     $(call build-object-rules,$(name))                              \
-    $(eval -include $(__modules.$(name).MODULE_DEPS))               \
                                                                     \
     $(if $(filter executable,$(__modules.$(name).MODULE_TYPE)),     \
       $(call build-executable,$(name))                              \
@@ -348,6 +347,9 @@ build-rules =                                                       \
     )                                                               \
     $(if $(filter static_library,$(__modules.$(name).MODULE_TYPE)), \
       $(call build-static-library,$(name))                          \
+    )                                                               \
+    $(if $(filter $(name),$(MAKECMDGOALS)),    \
+      $(eval -include $(__modules.$(name).MODULE_DEPS))             \
     )                                                               \
   )
 

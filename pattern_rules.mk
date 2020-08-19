@@ -9,6 +9,12 @@
 %.o: %.cpp
 	$(CXX) $(CXXFLAGS) $(__local_cxxflags) $(CPPFLAGS) $(__local_cppflags) $(TARGET_ARCH) -c -o $@ $<
 
+%.d: %.cpp
+	$(CXX) -MM $(CXXFLAGS) $(__local_cxxflags) $(CPPFLAGS) $(__local_cppflags) $(TARGET_ARCH) $< -o $@
+
+%.c: %.cpp
+	$(CC) -MM $(CFLAGS) $(__local_cflags) $(CPPFLAGS) $(__local_cppflags) $(TARGET_ARCH) $< -o $@
+
 
 # disable antiquated and unused implicit rules
 %: %.C

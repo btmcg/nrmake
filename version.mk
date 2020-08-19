@@ -15,5 +15,6 @@ $(VERSION_FILE): .git/HEAD .git/index
 all: $(VERSION_FILE)
 tidy: $(VERSION_FILE)
 $(foreach module,$(call get-all-modules), \
+  $(eval $(__modules.$(module).MODULE_DEPS): $(VERSION_FILE)) \
   $(eval $(module): $(VERSION_FILE))      \
 )

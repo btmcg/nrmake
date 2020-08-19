@@ -124,7 +124,7 @@ endif
 ARFLAGS := rcsv
 
 # compiler flags
-CPPFLAGS += -ggdb3 -fstrict-aliasing $(WARN) -MMD $(OPTFLAGS) -iquote src
+CPPFLAGS += -ggdb3 -fstrict-aliasing $(WARN) $(OPTFLAGS) -iquote src
 CXXFLAGS += -std=c++2a $(CXX_WARN)
 CFLAGS   += -std=c11 $(CC_WARN)
 
