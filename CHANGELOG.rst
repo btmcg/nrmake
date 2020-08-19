@@ -2,6 +2,7 @@
 ------------------
 * The ``clean`` target no longer removes dependency files and version
   file. The ``distclean`` target does this now.
+* Dependency files are built before object files now.
 
 
 2.1.3 - 2020-07-26
