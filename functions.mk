@@ -327,9 +327,9 @@ build-object-rules =                                                            
   $(foreach source,$(__modules.$1.MODULE_SOURCE_FILES),                                                                                                     \
     $(eval $(call convert-c-cpp-suffix-to,$(source),o): $(source) Makefile nrmake/env.mk nrmake/functions.mk nrmake/pattern_rules.mk nrmake/third_party.mk) \
     $(eval $(call convert-c-cpp-suffix-to,$(source),o): $(__modules.$1.MODULE_PATH)/Module.mk)                                                              \
-    $(eval $(call convert-c-cpp-suffix-to,$(source),o) $(call convert-c-cpp-suffix-to,$(source),d): __local_cflags := $$(__modules.$1.MODULE_CFLAGS))                                                   \
-    $(eval $(call convert-c-cpp-suffix-to,$(source),o) $(call convert-c-cpp-suffix-to,$(source),d): __local_cppflags := $$(__modules.$1.MODULE_CPPFLAGS))                                               \
-    $(eval $(call convert-c-cpp-suffix-to,$(source),o) $(call convert-c-cpp-suffix-to,$(source),d): __local_cxxflags := $$(__modules.$1.MODULE_CXXFLAGS))                                               \
+    $(eval $(call convert-c-cpp-suffix-to,$(source),o) $(call convert-c-cpp-suffix-to,$(source),d): __local_cflags := $$(__modules.$1.MODULE_CFLAGS))       \
+    $(eval $(call convert-c-cpp-suffix-to,$(source),o) $(call convert-c-cpp-suffix-to,$(source),d): __local_cppflags := $$(__modules.$1.MODULE_CPPFLAGS))   \
+    $(eval $(call convert-c-cpp-suffix-to,$(source),o) $(call convert-c-cpp-suffix-to,$(source),d): __local_cxxflags := $$(__modules.$1.MODULE_CXXFLAGS))   \
   )
 
 
@@ -346,30 +346,30 @@ build-object-rules =                                                            
 #            named. However, check for the existence of the special
 #            target 'all' and a module alias (e.g., test-runner/test).
 # ----------------------------------------------------------------------
-build-rules =                                                       \
-  $(foreach name,$1,                                                \
-    $(call build-module-rules,$(name))                              \
-    $(call build-local-target-rules,$(name))                        \
-    $(call build-internal-dependencies,$(name))                     \
-    $(call build-object-rules,$(name))                              \
-                                                                    \
-    $(if $(filter executable,$(__modules.$(name).MODULE_TYPE)),     \
-      $(call build-executable,$(name))                              \
-    )                                                               \
-    $(if $(filter shared_library,$(__modules.$(name).MODULE_TYPE)), \
-      $(call build-shared-library,$(name))                          \
-    )                                                               \
-    $(if $(filter static_library,$(__modules.$(name).MODULE_TYPE)), \
-      $(call build-static-library,$(name))                          \
-    )                                                               \
-                                                                    \
-    $(if $(strip $(MAKECMDGOALS)),                                  \
+build-rules =                                                                       \
+  $(foreach name,$1,                                                                \
+    $(call build-module-rules,$(name))                                              \
+    $(call build-local-target-rules,$(name))                                        \
+    $(call build-internal-dependencies,$(name))                                     \
+    $(call build-object-rules,$(name))                                              \
+                                                                                    \
+    $(if $(filter executable,$(__modules.$(name).MODULE_TYPE)),                     \
+      $(call build-executable,$(name))                                              \
+    )                                                                               \
+    $(if $(filter shared_library,$(__modules.$(name).MODULE_TYPE)),                 \
+      $(call build-shared-library,$(name))                                          \
+    )                                                                               \
+    $(if $(filter static_library,$(__modules.$(name).MODULE_TYPE)),                 \
+      $(call build-static-library,$(name))                                          \
+    )                                                                               \
+                                                                                    \
+    $(if $(strip $(MAKECMDGOALS)),                                                  \
       $(if $(filter all $(name) $(__modules.$(name).MODULE_ALIAS),$(MAKECMDGOALS)), \
-        $(eval -include $(__modules.$(name).MODULE_DEPS))           \
-      )                                                             \
-    ,                                                               \
-      $(eval -include $(__modules.$(name).MODULE_DEPS))             \
-    )                                                               \
+        $(eval -include $(__modules.$(name).MODULE_DEPS))                           \
+      )                                                                             \
+    ,                                                                               \
+      $(eval -include $(__modules.$(name).MODULE_DEPS))                             \
+    )                                                                               \
   )
 
 
