@@ -6,6 +6,9 @@
 # GNU Make built-in targets
 # ----------------------------------------------------------------------
 
+# eliminate all built-in implicit rules and rule-specific variables
+MAKEFLAGS := --no-builtin-rules --no-builtin-variables
+
 # delete the target if a recipe fails with a non-zero status
 .DELETE_ON_ERROR:
 
