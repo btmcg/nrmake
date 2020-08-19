@@ -193,14 +193,14 @@ add-executable-module =                                                         
 #            if MODULE_NAME is not set, then it is set to the directory
 #            name
 # ----------------------------------------------------------------------
-add-shared-library-module =                                                             \
-  $(eval MODULE_PATH := $1)                                                             \
-  $(eval MODULE_NAME ?= $(notdir $(MODULE_PATH)))                                       \
-  $(eval __modules.$(MODULE_NAME).MODULE_NAME   := $(MODULE_NAME))                      \
-  $(eval __modules.$(MODULE_NAME).MODULE_TARGET := $(MODULE_PATH)/lib$(MODULE_NAME).so) \
-  $(eval __modules.$(MODULE_NAME).MODULE_TYPE   := shared_library)                      \
-  $(eval __modules.$(MODULE_NAME).MODULE_CPPFLAGS += -fPIC)                             \
-  $(eval __modules.$(MODULE_NAME).MODULE_LDFLAGS  += -fPIC)                             \
+add-shared-library-module =                                                               \
+  $(eval MODULE_PATH := $1)                                                               \
+  $(eval MODULE_NAME ?= $(notdir $(MODULE_PATH)))                                         \
+  $(eval __modules.$(MODULE_NAME).MODULE_NAME     := $(MODULE_NAME))                      \
+  $(eval __modules.$(MODULE_NAME).MODULE_TARGET   := $(MODULE_PATH)/lib$(MODULE_NAME).so) \
+  $(eval __modules.$(MODULE_NAME).MODULE_TYPE     := shared_library)                      \
+  $(eval __modules.$(MODULE_NAME).MODULE_CPPFLAGS += -fPIC)                               \
+  $(eval __modules.$(MODULE_NAME).MODULE_LDFLAGS  += -fPIC)                               \
   $(call _add-module,$(MODULE_NAME))
 
 
