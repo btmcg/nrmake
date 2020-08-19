@@ -154,16 +154,16 @@ Default targets
 
 ``clean``
     Removes all build artifacts from the tree; this includes: object
-    code, dependency files, libraries, and executables. Top-level
-    ``bin/`` and ``lib/`` directories are preserved.
+    code, libraries, and executables. Top-level ``bin/`` and ``lib/``
+    directories are preserved.
 
 ``dist``
     Create a tarball for distribution. All files in ``bin/``,
     ``include/``, and ``lib/`` will be included.
 
 ``distclean``
-    Calls ``clean`` and additionally removes ``bin/``, ``lib/``, and
-    ``include/`` directories.
+    Calls ``clean`` and additionally removes dependency files, the
+    version file, ``bin/``, ``lib/``, and ``include/`` directories.
 
 ``format``
     Runs ``clang-format`` on ``src/``, ``test/``, and ``benchmark/``

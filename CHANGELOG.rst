@@ -1,3 +1,9 @@
+2.1.4 - 2020-08-19
+------------------
+* The ``clean`` target no longer removes dependency files and version
+  file. The ``distclean`` target does this now.
+
+
 2.1.3 - 2020-07-26
 ------------------
 * Only display ``PROJECT`` and ``ROOT_DIR`` when running ``make

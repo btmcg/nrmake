@@ -37,12 +37,14 @@ dist: all | $(INC_DIR)
 	$(make-dist)
 
 clean:
-	$(if $(wildcard $(get-all-targets) $(get-all-objs) $(get-all-deps)),\
-		$(RM) $(strip $(get-all-targets)) $(get-all-objs) $(get-all-deps))
-	$(if $(wildcard $(VERSION_FILE)),\
-		$(RM) $(VERSION_FILE))
+	$(if $(wildcard $(get-all-targets) $(get-all-objs)),\
+		$(RM) $(strip $(get-all-targets)) $(get-all-objs))
 
 distclean: clean
+	$(if $(wildcard $(get-all-deps)),\
+		$(RM) $(strip $(get-all-deps)))
+	$(if $(wildcard $(VERSION_FILE)),\
+		$(RM) $(VERSION_FILE))
 	$(if $(wildcard $(BIN_DIR)),\
 		$(RM) $(BIN_DIR)/* && $(RMDIR) $(BIN_DIR))
 	$(if $(wildcard $(INC_DIR)),\
