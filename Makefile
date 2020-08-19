@@ -37,20 +37,26 @@ dist: all | $(INC_DIR)
 	$(make-dist)
 
 clean:
-	$(if $(wildcard $(get-all-targets) $(get-all-objs)),\
-		$(RM) $(strip $(get-all-targets)) $(get-all-objs))
+	$(if $(wildcard $(get-all-targets) $(get-all-objs)),  \
+		$(RM) $(strip $(get-all-targets)) $(get-all-objs) \
+	)
 
 distclean: clean
-	$(if $(wildcard $(get-all-deps)),\
-		$(RM) $(strip $(get-all-deps)))
-	$(if $(wildcard $(VERSION_FILE)),\
-		$(RM) $(VERSION_FILE))
-	$(if $(wildcard $(BIN_DIR)),\
-		$(RM) $(BIN_DIR)/* && $(RMDIR) $(BIN_DIR))
-	$(if $(wildcard $(INC_DIR)),\
-		$(RM_RF) $(INC_DIR))
-	$(if $(wildcard $(LIB_DIR)),\
-		$(RM) $(LIB_DIR)/* && $(RMDIR) $(LIB_DIR))
+	$(if $(wildcard $(get-all-deps)),  \
+		$(RM) $(strip $(get-all-deps)) \
+	)
+	$(if $(wildcard $(VERSION_FILE)), \
+		$(RM) $(VERSION_FILE)         \
+	)
+	$(if $(wildcard $(BIN_DIR)),                  \
+		$(RM) $(BIN_DIR)/* && $(RMDIR) $(BIN_DIR) \
+	)
+	$(if $(wildcard $(INC_DIR)), \
+		$(RM_RF) $(INC_DIR)      \
+	)
+	$(if $(wildcard $(LIB_DIR)),                  \
+		$(RM) $(LIB_DIR)/* && $(RMDIR) $(LIB_DIR) \
+	)
 
 format:
 	@[ ! -d src       ] || find src       -type f -regex ".*\.[ch]\(pp\)?$$" -exec $(FORMAT) {} \;
