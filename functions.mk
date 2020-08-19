@@ -341,6 +341,10 @@ build-object-rules =                                                            
 # rationale: Generates and invokes all of the rules needed for all
 #            modules. Once all rules and dependencies have been
 #            determined, all that is left to do is kick off the build.
+# notes    : If MAKECMDGOALS is empty, include all dependencies. If it
+#            is not empty, only include dependencies for those modules
+#            named. However, check for the existence of the special
+#            target 'all' and a module alias (e.g., test-runner/test).
 # ----------------------------------------------------------------------
 build-rules =                                                       \
   $(foreach name,$1,                                                \
@@ -358,7 +362,12 @@ build-rules =                                                       \
     $(if $(filter static_library,$(__modules.$(name).MODULE_TYPE)), \
       $(call build-static-library,$(name))                          \
     )                                                               \
-    $(if $(filter $(name),$(MAKECMDGOALS)),                         \
+                                                                    \
+    $(if $(strip $(MAKECMDGOALS)),                                  \
+      $(if $(filter all $(name) $(__modules.$(name).MODULE_ALIAS),$(MAKECMDGOALS)), \
+        $(eval -include $(__modules.$(name).MODULE_DEPS))           \
+      )                                                             \
+    ,                                                               \
       $(eval -include $(__modules.$(name).MODULE_DEPS))             \
     )                                                               \
   )
