@@ -348,7 +348,7 @@ build-rules =                                                       \
     $(if $(filter static_library,$(__modules.$(name).MODULE_TYPE)), \
       $(call build-static-library,$(name))                          \
     )                                                               \
-    $(if $(filter $(name),$(MAKECMDGOALS)),    \
+    $(if $(filter $(name),$(MAKECMDGOALS)),                         \
       $(eval -include $(__modules.$(name).MODULE_DEPS))             \
     )                                                               \
   )
