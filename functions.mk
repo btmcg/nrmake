@@ -170,10 +170,13 @@ load-modules =                                                                  
 # rationale: used in Module.mk files to add an executable target to the
 #            build system
 # note     : this function requires MODULE_PATH to be set by caller
+#            if MODULE_NAME is not set, then it is set to the directory
+#            name
 # ----------------------------------------------------------------------
 add-executable-module =                                                           \
   $(eval MODULE_PATH := $1)                                                       \
   $(eval MODULE_NAME ?= $(notdir $(MODULE_PATH)))                                 \
+  $(eval __modules.$(MODULE_NAME).MODULE_NAME   := $(MODULE_NAME))                \
   $(eval __modules.$(MODULE_NAME).MODULE_TARGET := $(MODULE_PATH)/$(MODULE_NAME)) \
   $(eval __modules.$(MODULE_NAME).MODULE_TYPE   := executable)                    \
   $(call _add-module,$(MODULE_NAME))
@@ -187,10 +190,13 @@ add-executable-module =                                                         
 # rationale: used in Module.mk files to add a shared library target to
 #            the build system
 # note     : this function requires MODULE_PATH to be set by caller
+#            if MODULE_NAME is not set, then it is set to the directory
+#            name
 # ----------------------------------------------------------------------
 add-shared-library-module =                                                             \
   $(eval MODULE_PATH := $1)                                                             \
   $(eval MODULE_NAME ?= $(notdir $(MODULE_PATH)))                                       \
+  $(eval __modules.$(MODULE_NAME).MODULE_NAME   := $(MODULE_NAME))                      \
   $(eval __modules.$(MODULE_NAME).MODULE_TARGET := $(MODULE_PATH)/lib$(MODULE_NAME).so) \
   $(eval __modules.$(MODULE_NAME).MODULE_TYPE   := shared_library)                      \
   $(eval __modules.$(MODULE_NAME).MODULE_CPPFLAGS += -fPIC)                             \
@@ -206,10 +212,13 @@ add-shared-library-module =                                                     
 # rationale: used in Module.mk files to add a static library target to
 #            the build system
 # note     : this function requires MODULE_PATH to be set by caller
+#            if MODULE_NAME is not set, then it is set to the directory
+#            name
 # ----------------------------------------------------------------------
 add-static-library-module =                                                            \
   $(eval MODULE_PATH := $1)                                                            \
   $(eval MODULE_NAME ?= $(notdir $(MODULE_PATH)))                                      \
+  $(eval __modules.$(MODULE_NAME).MODULE_NAME   := $(MODULE_NAME))                     \
   $(eval __modules.$(MODULE_NAME).MODULE_TARGET := $(MODULE_PATH)/lib$(MODULE_NAME).a) \
   $(eval __modules.$(MODULE_NAME).MODULE_TYPE   := static_library)                     \
   $(call _add-module,$(MODULE_NAME))
@@ -236,6 +245,7 @@ _add-module =                                                                   
       $(eval __modules.$1.MODULE_EXPORT_HEADERS_PREFIX := $(subst src/,,$(MODULE_PATH)))                \
     )                                                                                                   \
   )                                                                                                     \
+  $(eval __modules.$1.MODULE_ALIAS           := $(notdir $(MODULE_PATH)))                               \
   $(eval __modules.$1.MODULE_CFLAGS          := $(MODULE_CFLAGS))                                       \
   $(eval __modules.$1.MODULE_CPPFLAGS        := $(MODULE_CPPFLAGS))                                     \
   $(eval __modules.$1.MODULE_CXXFLAGS        := $(MODULE_CXXFLAGS))                                     \
