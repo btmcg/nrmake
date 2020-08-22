@@ -251,7 +251,6 @@ _add-module =                                                                   
   $(eval __modules.$1.MODULE_CXXFLAGS        := $(MODULE_CXXFLAGS))                                     \
   $(eval __modules.$1.MODULE_DEPS            := $(call convert-c-cpp-suffix-to,$(__local_src),d))       \
   $(eval __modules.$1.MODULE_EXPORT_HEADERS  := $(addprefix $(MODULE_PATH)/,$(MODULE_EXPORT_HEADERS)))  \
-  $(eval __modules.$1.MODULE_GENERATED_FILES := $(addprefix $(MODULE_PATH)/,$(MODULE_GENERATED_FILES))) \
   $(eval __modules.$1.MODULE_LDFLAGS         := $(MODULE_LDFLAGS))                                      \
   $(eval __modules.$1.MODULE_LDLIBS          := $(addprefix -l,$(MODULE_LIBRARIES)) $(MODULE_LDLIBS))   \
   $(eval __modules.$1.MODULE_LIBRARIES       := $(MODULE_LIBRARIES))                                    \
@@ -288,7 +287,6 @@ build-module-rules =                                                            
 # ----------------------------------------------------------------------
 build-local-target-rules =                                                      \
   $(eval $(__modules.$1.MODULE_TARGET): | $(BIN_DIR) $(LIB_DIR))                \
-  $(eval $(__modules.$1.MODULE_TARGET): $(__modules.$1.MODULE_GENERATED_FILES)) \
   $(eval $(__modules.$1.MODULE_TARGET): $(__modules.$1.MODULE_OBJS))
 
 
