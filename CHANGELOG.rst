@@ -1,4 +1,4 @@
-2.1.4 - 2020-08-19
+2.1.4 - 2020-08-22
 ------------------
 * The ``clean`` target no longer removes dependency files and version
   file. The ``distclean`` target does this now.
