@@ -1,3 +1,8 @@
+2.1.x - master
+--------------
+* Add ``-Wswitch-default`` and ``-Wswitch-enum`` warnings
+
+
 2.1.4 - 2020-08-22
 ------------------
 * The ``clean`` target no longer removes dependency files and version
