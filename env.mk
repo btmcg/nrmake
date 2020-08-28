@@ -72,6 +72,8 @@ WARN :=                        \
   -Wformat=2                   \
   -Wmissing-include-dirs       \
   -Wno-deprecated-declarations \
+  -Wswitch-default             \
+  -Wswitch-enum                \
   -Wundef                      \
   -Wuninitialized
 
