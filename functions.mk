@@ -12,6 +12,7 @@ modules-locals :=              \
   MODULE_DEPS                  \
   MODULE_EXPORT_HEADERS        \
   MODULE_EXPORT_HEADERS_PREFIX \
+  MODULE_GENERATED_FILES       \
   MODULE_LDFLAGS               \
   MODULE_LDLIBS                \
   MODULE_LIBRARIES             \
@@ -144,6 +145,14 @@ get-all-targets = $(foreach name,$(__all_modules),$(__modules.$(name).MODULE_TAR
 
 
 # ----------------------------------------------------------------------
+# function : get-all-generated
+# returns  : every module's MODULE_GENERATED_FILES
+# usage    : $(get-all-generated)
+# ----------------------------------------------------------------------
+get-all-generated = $(foreach name,$(__all_modules),$(__modules.$(name).MODULE_GENERATED_FILES))
+
+
+# ----------------------------------------------------------------------
 # function : load-modules
 # returns  : nothing
 # usage    : $(load-modules)
@@ -251,6 +260,7 @@ _add-module =                                                                   
   $(eval __modules.$1.MODULE_CXXFLAGS        := $(MODULE_CXXFLAGS))                                     \
   $(eval __modules.$1.MODULE_DEPS            := $(call convert-c-cpp-suffix-to,$(__local_src),d))       \
   $(eval __modules.$1.MODULE_EXPORT_HEADERS  := $(addprefix $(MODULE_PATH)/,$(MODULE_EXPORT_HEADERS)))  \
+  $(eval __modules.$1.MODULE_GENERATED_FILES := $(addprefix $(MODULE_PATH)/,$(MODULE_GENERATED_FILES))) \
   $(eval __modules.$1.MODULE_LDFLAGS         := $(MODULE_LDFLAGS))                                      \
   $(eval __modules.$1.MODULE_LDLIBS          := $(addprefix -l,$(MODULE_LIBRARIES)) $(MODULE_LDLIBS))   \
   $(eval __modules.$1.MODULE_LIBRARIES       := $(MODULE_LIBRARIES))                                    \
@@ -274,6 +284,9 @@ build-module-rules =                                                            
   $(eval $1: $(__modules.$1.MODULE_TARGET))                                           \
   $(eval $(__modules.$1.MODULE_TARGET): $(__modules.$1.MODULE_PATH/Module.mk))        \
   $(foreach other_module,$(__modules.$1.MODULE_LIBRARIES),                            \
+    $(eval $1: $(__modules.$(other_module).MODULE_GENERATED_FILES))                            \
+    $(eval $(__modules.$1.MODULE_DEPS): $(__modules.$(other_module).MODULE_GENERATED_FILES))   \
+    $(eval $(__modules.$1.MODULE_TARGET): $(__modules.$(other_module).MODULE_GENERATED_FILES)) \
     $(eval $(__modules.$1.MODULE_TARGET): $(__modules.$(other_module).MODULE_TARGET)) \
   )
 
@@ -287,6 +300,7 @@ build-module-rules =                                                            
 # ----------------------------------------------------------------------
 build-local-target-rules =                                                      \
   $(eval $(__modules.$1.MODULE_TARGET): | $(BIN_DIR) $(LIB_DIR))                \
+  $(eval $(__modules.$1.MODULE_TARGET): $(__modules.$1.MODULE_GENERATED_FILES)) \
   $(eval $(__modules.$1.MODULE_TARGET): $(__modules.$1.MODULE_OBJS))
 
 
@@ -640,6 +654,7 @@ list-modules =                                                                  
     $(info $(space2)MODULE_DEPS                  [$(__modules.$(name).MODULE_DEPS)])                  \
     $(info $(space2)MODULE_EXPORT_HEADERS        [$(__modules.$(name).MODULE_EXPORT_HEADERS)])        \
     $(info $(space2)MODULE_EXPORT_HEADERS_PREFIX [$(__modules.$(name).MODULE_EXPORT_HEADERS_PREFIX)]) \
+    $(info $(space2)MODULE_GENERATED_FILES       [$(__modules.$(name).MODULE_GENERATED_FILES)])       \
     $(info $(space2)MODULE_LDFLAGS               [$(__modules.$(name).MODULE_LDFLAGS)])               \
     $(info $(space2)MODULE_LDLIBS                [$(__modules.$(name).MODULE_LDLIBS)])                \
     $(info $(space2)MODULE_LIBRARIES             [$(__modules.$(name).MODULE_LIBRARIES)])             \

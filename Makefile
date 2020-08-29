@@ -29,7 +29,7 @@ $(eval $(call build-rules,$(get-all-modules)))
 # ----------------------------------------------------------------------
 
 # necessary targets and phony targets
-.PHONY: all benchmark clean dist distclean format help list-modules tags test tidy $(get-all-modules)
+.PHONY: all benchmark clean dist distclean format gen genclean help list-modules tags test tidy
 .PHONY: $(get-all-modules)
 
 ## all  build all modules in tree
@@ -39,14 +39,23 @@ all: $(get-all-modules)
 dist: all | $(INC_DIR)
 	$(make-dist)
 
+## gen  build/create all generated files
+gen: $(get-all-generated)
+
 ## clean  remove all targets and object code
 clean:
 	$(if $(wildcard $(get-all-targets) $(get-all-objs)),  \
 		$(RM) $(strip $(get-all-targets)) $(get-all-objs) \
 	)
 
+## genclean  remove all generated files
+genclean:
+	$(if $(wildcard $(get-all-generated)),  \
+		$(RM) $(strip $(get-all-generated)) \
+	)
+
 ## distclean  remove all build artifacts, completely cleaning tree
-distclean: clean
+distclean: genclean clean
 	$(if $(wildcard $(get-all-deps)),  \
 		$(RM) $(strip $(get-all-deps)) \
 	)
