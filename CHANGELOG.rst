@@ -1,6 +1,7 @@
-2.1.x - master
---------------
+2.1.5 - 2020-08-29
+------------------
 * Add ``-Wswitch-default`` and ``-Wswitch-enum`` warnings
+* Add ``help`` target
 
 
 2.1.4 - 2020-08-22
@@ -80,7 +81,6 @@
 
 1.0.1 - 2020-06-11
 ------------------
-
 * Add ``VERSION_FILE`` as a dependency to ``tidy`` target.
 * Write ``VERSION_FILE`` in a single ``sh`` command to avoid
   race-conditions.
@@ -88,5 +88,4 @@
 
 1.0.0 - 2020-06-09
 ------------------
-
 * First "official" release.
