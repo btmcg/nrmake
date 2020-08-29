@@ -45,6 +45,8 @@ AR      := ar
 CP      := cp --force
 DOXYGEN := doxygen
 FORMAT  := clang-format -i --verbose
+GIT     := git
+GIT_VERSION := $(GIT) describe --abbrev=4 --always --dirty --tags
 MKDIR   := mkdir --parents
 MV      := mv --force
 RM      := rm --force

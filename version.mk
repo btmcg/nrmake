@@ -4,7 +4,7 @@
 
 
 GIT := /usr/bin/git
-VERSION := $(shell $(GIT) describe --abbrev=4 --always --dirty --tags)
+VERSION := $(shell $(GIT_VERSION))
 VERSION_FILE := src/version.h
 
 $(VERSION_FILE): .git/HEAD .git/index
