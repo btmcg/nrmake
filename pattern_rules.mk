@@ -8,12 +8,11 @@
 	$(CC) $(CFLAGS) $(__local_cflags) $(CPPFLAGS) $(__local_cppflags) $(TARGET_ARCH) -c $< -o $@
 
 %.d: %.c
-	$(CC) -MM $(CFLAGS) $(__local_cflags) $(CPPFLAGS) $(__local_cppflags) $(TARGET_ARCH) $< -o $@
-
+	$(CC) -MM -MT $(@:d=o) $(CFLAGS) $(__local_cflags) $(CPPFLAGS) $(__local_cppflags) $(TARGET_ARCH) $< -o $@
 
 # pattern rules for c++
 %.o: %.cpp
 	$(CXX) $(CXXFLAGS) $(__local_cxxflags) $(CPPFLAGS) $(__local_cppflags) $(TARGET_ARCH) -c $< -o $@
 
 %.d: %.cpp
-	$(CXX) -MM $(CXXFLAGS) $(__local_cxxflags) $(CPPFLAGS) $(__local_cppflags) $(TARGET_ARCH) $< -o $@
+	$(CXX) -MM -MT $(@:d=o) $(CXXFLAGS) $(__local_cxxflags) $(CPPFLAGS) $(__local_cppflags) $(TARGET_ARCH) $< -o $@
