@@ -1,3 +1,10 @@
+2.1.x - 2020-08-29
+------------------
+* Initial support for generated code using ``MODULE_GENERATED_FILES``.
+  The user is expected to provide the pattern rule and/or the method by
+  which the generated files are created.
+
+
 2.1.6 - 2020-08-29
 ------------------
 * Fix bug in how ``.d`` files are created to ensure that the target
