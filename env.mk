@@ -41,19 +41,19 @@ endif
 
 # default command variables
 # ----------------------------------------------------------------------
-AR      := ar
-CP      := cp --force
-DOXYGEN := doxygen
-FORMAT  := clang-format -i --verbose
-GIT     := git
+AR          := ar
+CP          := cp --force
+DOXYGEN     := doxygen
+FORMAT      := clang-format -i --verbose
+GIT         := git
 GIT_VERSION := $(GIT) describe --abbrev=4 --always --dirty --tags
-MKDIR   := mkdir --parents
-MV      := mv --force
-RM      := rm --force
-RMDIR   := rmdir
-RM_RF   := rm --force --recursive
-TAR     := tar
-TIDY    := clang-tidy
+MKDIR       := mkdir --parents
+MV          := mv --force
+RM          := rm --force
+RMDIR       := rmdir
+RM_RF       := rm --force --recursive
+TAR         := tar
+TIDY        := clang-tidy
 
 
 # compiler and linker flags
