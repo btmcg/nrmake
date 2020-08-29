@@ -1,3 +1,9 @@
+2.1.6 - 2020-08-29
+------------------
+* Fix bug in how ``.d`` files are created to ensure that the target
+  inside the file contains the full path.
+
+
 2.1.5 - 2020-08-29
 ------------------
 * Add ``-Wswitch-default`` and ``-Wswitch-enum`` warnings
