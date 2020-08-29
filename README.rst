@@ -40,7 +40,7 @@ submodule. From your project's root directory, do the following:
 
     git submodule add -- https://gitlab.com/btmcg/nrmake.git
     cd nrmake
-    git checkout v2.1.4
+    git checkout v2.1.5
     cd ..
     ln --relative --symbolic nrmake/Makefile
 
@@ -116,6 +116,9 @@ Supported build options
 Example usage
 -------------
 
+``make help``
+    Show available targets and descriptions.
+
 ``make -j``
     Builds the project using ``gcc`` with full optimizations and places
     all binaries and libraries in ``bin/`` and ``lib/``.
@@ -169,6 +172,9 @@ Default targets
     Runs ``clang-format`` on ``src/``, ``test/``, and ``benchmark/``
     directories (if they exist). Assumes a ``.clang-format`` file exists
     in root.
+
+``help``
+    Shows version of nrmake as well as defined targets and modules.
 
 ``list-modules``
     Prints to stdout every module the build system is aware of, along
