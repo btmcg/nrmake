@@ -279,15 +279,15 @@ _add-module =                                                                   
 # usage    : $(call build-module-rules,<module_name>)
 # rationale: generates rules for module
 # ----------------------------------------------------------------------
-build-module-rules =                                                                  \
-  $(eval __modules.$1.MODULE_LDFLAGS += -L$(LIB_DIR))                                 \
-  $(eval $1: $(__modules.$1.MODULE_TARGET))                                           \
-  $(eval $(__modules.$1.MODULE_TARGET): $(__modules.$1.MODULE_PATH/Module.mk))        \
-  $(foreach other_module,$(__modules.$1.MODULE_LIBRARIES),                            \
+build-module-rules =                                                                           \
+  $(eval __modules.$1.MODULE_LDFLAGS += -L$(LIB_DIR))                                          \
+  $(eval $1: $(__modules.$1.MODULE_TARGET))                                                    \
+  $(eval $(__modules.$1.MODULE_TARGET): $(__modules.$1.MODULE_PATH/Module.mk))                 \
+  $(foreach other_module,$(__modules.$1.MODULE_LIBRARIES),                                     \
     $(eval $1: $(__modules.$(other_module).MODULE_GENERATED_FILES))                            \
     $(eval $(__modules.$1.MODULE_DEPS): $(__modules.$(other_module).MODULE_GENERATED_FILES))   \
     $(eval $(__modules.$1.MODULE_TARGET): $(__modules.$(other_module).MODULE_GENERATED_FILES)) \
-    $(eval $(__modules.$1.MODULE_TARGET): $(__modules.$(other_module).MODULE_TARGET)) \
+    $(eval $(__modules.$1.MODULE_TARGET): $(__modules.$(other_module).MODULE_TARGET))          \
   )
 
 
