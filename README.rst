@@ -207,9 +207,9 @@ of ``nrmake/third_party.mk`` is required. Boilerplate provided.
 
 .. code-block::
 
-    git submodule add -- https://github.com/catchorg/Catch2.git third_party/catch2/2.12.2
-    cd third_party/catch2/2.12.2
-    git checkout v2.12.2
+    git submodule add -- https://github.com/catchorg/Catch2.git third_party/catch2/2.13.1
+    cd third_party/catch2/2.13.1
+    git checkout v2.13.1
     cd -
     vim nrmake/third_party.mk
 
@@ -224,16 +224,16 @@ Boilerplate is provided.
 .. code-block::
 
     # from your repository root
-    git clone --branch=v1.5.1 --depth=1 https://github.com/google/benchmark.git gb
+    git clone --branch=v1.5.2 --depth=1 https://github.com/google/benchmark.git gb
     cd gb
 
-    cmake . -DBENCHMARK_ENABLE_GTEST_TESTS=OFF -DBENCHMARK_ENABLE_TESTING=OFF -DCMAKE_BUILD_TYPE=Release -DCMAKE_CXX_COMPILER=/usr/bin/g++ -DCMAKE_INSTALL_PREFIX=../third_party/google-benchmark-gcc/1.5.1
+    cmake . -DBENCHMARK_ENABLE_GTEST_TESTS=OFF -DBENCHMARK_ENABLE_TESTING=OFF -DCMAKE_BUILD_TYPE=Release -DCMAKE_CXX_COMPILER=/usr/bin/g++ -DCMAKE_INSTALL_PREFIX=../third_party/google-benchmark-gcc/1.5.2
     make install -j
 
     # now build with clang
     rm -rf CMakeFiles src/generated
 
-    cmake . -DBENCHMARK_ENABLE_GTEST_TESTS=OFF -DBENCHMARK_ENABLE_TESTING=OFF -DBENCHMARK_USE_LIBCXX=ON -DCMAKE_BUILD_TYPE=Release -DCMAKE_CXX_COMPILER=/usr/bin/clang++ -DCMAKE_INSTALL_PREFIX=../third_party/google-benchmark-clang/1.5.1
+    cmake . -DBENCHMARK_ENABLE_GTEST_TESTS=OFF -DBENCHMARK_ENABLE_TESTING=OFF -DBENCHMARK_USE_LIBCXX=ON -DCMAKE_BUILD_TYPE=Release -DCMAKE_CXX_COMPILER=/usr/bin/clang++ -DCMAKE_INSTALL_PREFIX=../third_party/google-benchmark-clang/1.5.2
     make install -j
 
     cd ..
