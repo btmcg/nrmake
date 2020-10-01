@@ -1,8 +1,9 @@
-2.1.x - 2020-08-29
+2.1.7 - 2020-09-30
 ------------------
 * Initial support for generated code using ``MODULE_GENERATED_FILES``.
   The user is expected to provide the pattern rule and/or the method by
   which the generated files are created.
+* Fix bug in rwildcard where similarly named directories would match.
 
 
 2.1.6 - 2020-08-29
