@@ -85,17 +85,16 @@ clear-vars =                       \
 # arguments: 1: directory to start search in
 #            2: pattern(s) to match
 # returns  : all files matching pattern under directory
-# usage    : $(call rwildcard,,*.cpp), $(call rwildcard,/tmp/,*.c *.cpp)
+# usage    : $(call rwildcard,,*.cpp), $(call rwildcard,/tmp,*.c *.cpp)
 # rationale: recursively searchs each directory below $1 for filenames
 #            matching pattern in $2
 # ----------------------------------------------------------------------
-rwildcard =                                  \
-  $(patsubst $1/%,%,                         \
-    $(foreach directory,$(wildcard $1*),     \
-      $(call rwildcard,$(directory)/,$2)     \
-      $(filter $(subst *,%,$2),$(directory)) \
-    )                                        \
+rwildcard =                                 \
+  $(foreach directory,$(wildcard $(1:=/*)), \
+    $(call rwildcard,$(directory),$2)       \
+    $(filter $(subst *,%,$2),$(directory))  \
   )
+
 
 
 # ----------------------------------------------------------------------
@@ -238,12 +237,22 @@ add-static-library-module =                                                     
 # arguments: 1: single module name to be added
 # returns  : nothing
 # usage    : $(call _add-module,<module>)
-# rationale: internal function used for common add-module code used by
-#            all of the different module types.
+# rationale: Internal function used for common add-module code used by
+#            all of the different module types. If the
+#            MODULE_SOURCE_FILES variable contains full paths (i.e.
+#            starts with '/') like if added via rwildcard, then just
+#            record the files. If the paths are relative, then add the
+#            module's prefix to each file. This way, the user can supply
+#            the source files via rwildcard or via relative path such as
+#            "file1.cpp file2.cpp".
 # ----------------------------------------------------------------------
 _add-module =                                                                                           \
   $(if $(MODULE_SOURCE_FILES),                                                                          \
-    $(eval __local_src := $(addprefix $(MODULE_PATH)/,$(MODULE_SOURCE_FILES)))                          \
+      $(if $(filter /%,$(firstword $(MODULE_SOURCE_FILES))),                                            \
+        $(eval __local_src := $(realpath $(MODULE_SOURCE_FILES)))                                       \
+      ,                                                                                                 \
+        $(eval __local_src := $(addprefix $(MODULE_PATH)/,$(MODULE_SOURCE_FILES)))                      \
+      )                                                                                                 \
   ,                                                                                                     \
     $(eval __local_src := $(wildcard $(MODULE_PATH)/*.cpp $(MODULE_PATH)/*.c))                          \
   )                                                                                                     \
