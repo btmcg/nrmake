@@ -41,7 +41,6 @@ endif
 
 # default command variables
 # ----------------------------------------------------------------------
-AR          := ar
 CP          := cp --force
 DOXYGEN     := doxygen
 FORMAT      := clang-format -i --verbose

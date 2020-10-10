@@ -3,6 +3,7 @@
 * Default to -std=c++20
 * Separate definitions of ``AR`` and ``ARFLAGS`` so they can be set
   independently.
+* Only set ``AR`` and ``ARFLAGS`` in compiler-specific env files.
 
 
 2.1.7 - 2020-09-30
