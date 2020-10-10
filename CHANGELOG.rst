@@ -6,6 +6,7 @@
 * Only set ``AR`` and ``ARFLAGS`` in compiler-specific env files.
 * Allow user to override the utilities and flags used. Provide a
   centralized location to define the defaults: ``default_utilties.mk``.
+* Support ``TIDYFLAGS``.
 
 
 2.1.7 - 2020-09-30

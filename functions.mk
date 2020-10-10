@@ -604,7 +604,7 @@ run-clang-tidy =                                                              \
 # usage    : $(call cmd-clang-tidy,<module_name>)
 # ----------------------------------------------------------------------
 cmd-clang-tidy =                      \
-  $(TIDY)                             \
+  $(TIDY) $(TIDYFLAGS)                \
   $(__modules.$1.MODULE_SOURCE_FILES) \
   --                                  \
   $(CPPFLAGS)                         \
