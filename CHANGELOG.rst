@@ -7,6 +7,7 @@
 * Allow user to override the utilities and flags used. Provide a
   centralized location to define the defaults: ``default_utilties.mk``.
 * Support ``TIDYFLAGS``.
+* Support ``TARFLAGS``.
 
 
 2.1.7 - 2020-09-30

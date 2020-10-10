@@ -23,7 +23,7 @@ LD ?= ld
 LDFLAGS ?=
 
 TAR ?= tar
-TARFLAGS ?=
+TARFLAGS ?= --create --exclude-vcs --exclude=test-runner --exclude=benchmark-runner
 
 TIDY ?= clang-tidy
 TIDYFLAGS ?=

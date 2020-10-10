@@ -636,7 +636,10 @@ make-dist =                                                                     
   $(\n)                                                                                  \
   $(CP) $(VERSION_FILE) $(INC_DIR)                                                       \
   $(\n)                                                                                  \
-  $(TAR) --create --exclude-vcs --exclude=test-runner --exclude=benchmark-runner --transform='s,^,$(PACKAGE_NAME)/,' --file=$(PACKAGE_NAME)$(PACKAGE_EXT) $(BIN_DIR) $(LIB_DIR) $(INC_DIR)
+  $(TAR) $(TARFLAGS)                                                                     \
+    --transform='s,^,$(PACKAGE_NAME)/,'                                                  \
+    --file=$(PACKAGE_NAME)$(PACKAGE_EXT)                                                 \
+    $(BIN_DIR) $(LIB_DIR) $(INC_DIR)
 
 
 # debugging functions
