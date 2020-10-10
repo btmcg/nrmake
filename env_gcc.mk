@@ -9,7 +9,7 @@
 # command variables
 # ----------------------------------------------------------------------
 # Note: In order for -flto to work properly, gcc-ar must be used.
-AR  := gcc-ar $(ARFLAGS)
+AR  := gcc-ar
 CC  := gcc
 CXX := g++
 

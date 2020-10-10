@@ -576,7 +576,7 @@ cmd-build-cpp-shared-library =           \
 # usage    : $(call cmd-build-static-library,<module_name>)
 # ----------------------------------------------------------------------
 cmd-build-static-library =      \
-  $(AR)                         \
+  $(AR) $(ARFLAGS)              \
   $(__modules.$1.MODULE_TARGET) \
   $(__modules.$1.MODULE_OBJS)
 

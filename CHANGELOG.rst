@@ -1,6 +1,8 @@
 2.1.8 - 2020-10-10
 ------------------
 * Default to -std=c++20
+* Separate definitions of ``AR`` and ``ARFLAGS`` so they can be set
+  independently.
 
 
 2.1.7 - 2020-09-30

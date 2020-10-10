@@ -9,7 +9,7 @@
 # command variables
 # ----------------------------------------------------------------------
 # Note: In order for -flto to work properly, llvm-ar must be used.
-AR  := llvm-ar $(ARFLAGS)
+AR  := llvm-ar
 CC  := clang
 CXX := clang++
 
