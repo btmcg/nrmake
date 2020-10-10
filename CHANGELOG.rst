@@ -1,3 +1,8 @@
+2.1.8 - 2020-10-10
+------------------
+* Default to -std=c++20
+
+
 2.1.7 - 2020-09-30
 ------------------
 * Initial support for generated code using ``MODULE_GENERATED_FILES``.
