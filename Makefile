@@ -102,6 +102,11 @@ test: test-runner
 tidy:
 	$(run-clang-tidy)
 
+## tidy-fix  run clang-tidy on all c and cpp files in tree (and apply fixes)
+tidy-fix:
+	$(eval TIDYFLAGS += -fix-errors)
+	$(run-clang-tidy)
+
 ## list-modules  list all known modules in dependency tree
 list-modules:
 	$(list-modules)

@@ -9,6 +9,7 @@
 * Support ``TIDYFLAGS``.
 * Support ``TARFLAGS``.
 * Support ``FORMATFLAGS``.
+* Add ``make tidy-fix`` target that will apply fixes if possible.
 
 
 2.1.7 - 2020-09-30
