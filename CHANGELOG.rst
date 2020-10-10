@@ -8,6 +8,7 @@
   centralized location to define the defaults: ``default_utilties.mk``.
 * Support ``TIDYFLAGS``.
 * Support ``TARFLAGS``.
+* Support ``FORMATFLAGS``.
 
 
 2.1.7 - 2020-09-30

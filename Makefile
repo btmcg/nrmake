@@ -74,9 +74,9 @@ distclean: genclean clean
 
 ## format  run clang-format on all c and cpp files in tree
 format:
-	@[ ! -d src       ] || find src       -type f -regex ".*\.[ch]\(pp\)?$$" -exec $(FORMAT) {} \;
-	@[ ! -d test      ] || find test      -type f -regex ".*\.[ch]\(pp\)?$$" -exec $(FORMAT) {} \;
-	@[ ! -d benchmark ] || find benchmark -type f -regex ".*\.[ch]\(pp\)?$$" -exec $(FORMAT) {} \;
+	@[ ! -d src       ] || find src       -type f -regex ".*\.[ch]\(pp\)?$$" -exec $(FORMAT) $(FORMATFLAGS) {} \;
+	@[ ! -d test      ] || find test      -type f -regex ".*\.[ch]\(pp\)?$$" -exec $(FORMAT) $(FORMATFLAGS) {} \;
+	@[ ! -d benchmark ] || find benchmark -type f -regex ".*\.[ch]\(pp\)?$$" -exec $(FORMAT) $(FORMATFLAGS) {} \;
 
 ## help  show this message and exit
 help: $(firstword $(MAKEFILE_LIST))
