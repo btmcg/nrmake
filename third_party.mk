@@ -9,7 +9,7 @@
 CATCH := third_party/catch2/2.13.2/single_include
 use-catch = $(eval MODULE_CPPFLAGS += -isystem$(CATCH))
 
-FMT := third_party/fmt/7.0.0
+FMT := third_party/fmt/7.0.3
 use-fmt = $(eval MODULE_CPPFLAGS += -DFMT_HEADER_ONLY -isystem$(FMT)/include)
 
 ifeq ($(COMPILER),gcc)
