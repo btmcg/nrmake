@@ -1,4 +1,4 @@
-#￼Copyright(c) 2020-present, Brian McGuire.
+# Copyright(c) 2020-present, Brian McGuire.
 # Distributed under the BSD-2-Clause
 # (http://opensource.org/licenses/BSD-2-Clause)
 
@@ -122,8 +122,6 @@ else
   OPTFLAGS += -O3 -DNDEBUG
 endif
 
-
-# flags for archive-maintaining program
 
 # compiler flags
 CPPFLAGS += -ggdb3 -fstrict-aliasing $(WARN) $(OPTFLAGS) -iquote src

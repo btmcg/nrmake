@@ -1,4 +1,4 @@
-#￼Copyright(c) 2020-present, Brian McGuire.
+# Copyright(c) 2020-present, Brian McGuire.
 # Distributed under the BSD-2-Clause
 # (http://opensource.org/licenses/BSD-2-Clause)
 
