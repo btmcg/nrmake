@@ -2,6 +2,7 @@
 ------------------
 * Improve search for ``Module.mk`` files.
 * Change path to google-benchmark slightly. Improve build instructions.
+* Reduce gcc warnings
 
 
 2.1.8 - 2020-10-10
