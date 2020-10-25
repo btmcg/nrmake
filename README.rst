@@ -226,15 +226,34 @@ Boilerplate is provided.
     # from your repository root
     git clone --branch=v1.5.2 --depth=1 https://github.com/google/benchmark.git gb
     cd gb
-
-    cmake . -DBENCHMARK_ENABLE_GTEST_TESTS=OFF -DBENCHMARK_ENABLE_TESTING=OFF -DCMAKE_BUILD_TYPE=Release -DCMAKE_CXX_COMPILER=/usr/bin/g++ -DCMAKE_INSTALL_PREFIX=../third_party/google-benchmark-gcc/1.5.2
-    make install -j
+    cmake \
+        -DBENCHMARK_ENABLE_GTEST_TESTS=BOOL=OFF \
+        -DBENCHMARK_ENABLE_LTO:BOOL=ON \
+        -DBENCHMARK_ENABLE_TESTING:BOOL=OFF \
+        -DCMAKE_BUILD_TYPE:STRING=RELEASE \
+        -DCMAKE_CXX_COMPILER:STRING=g++ \
+        -DCMAKE_INSTALL_PREFIX:PATH=../../third_party/google-benchmark/gcc-10.2.0/1.5.2 \
+        -DGCC_AR:STRING=gcc-ar \
+        -DGCC_RANLIB:STRING=gcc-ranlib \
+        -S . -B "build"
+    cmake --build "build" --config Release --target install --parallel
 
     # now build with clang
-    rm -rf CMakeFiles src/generated
+    rm -rf build
 
-    cmake . -DBENCHMARK_ENABLE_GTEST_TESTS=OFF -DBENCHMARK_ENABLE_TESTING=OFF -DBENCHMARK_USE_LIBCXX=ON -DCMAKE_BUILD_TYPE=Release -DCMAKE_CXX_COMPILER=/usr/bin/clang++ -DCMAKE_INSTALL_PREFIX=../third_party/google-benchmark-clang/1.5.2
-    make install -j
+    cmake \
+        -DBENCHMARK_ENABLE_GTEST_TESTS=BOOL=OFF \
+        -DBENCHMARK_ENABLE_LTO:BOOL=ON \
+        -DBENCHMARK_ENABLE_TESTING:BOOL=OFF \
+        -DBENCHMARK_USE_LIBCXX:BOOL=ON \
+        -DCMAKE_BUILD_TYPE:STRING=RELEASE \
+        -DCMAKE_CXX_COMPILER:STRING=clang++ \
+        -DCMAKE_INSTALL_PREFIX:PATH=../../third_party/google-benchmark/clang-10.0.1/1.5.2 \
+        -DLLVMAR_EXECUTABLE:STRING=llvm-ar \
+        -DLLVMNM_EXECUTABLE:STRING=llvm-nm \
+        -DLLVMRANLIB_EXECUTABLE:STRING=llvm-ranlib \
+        -S . -B "build"
+    cmake --build "build" --config Release --target install --parallel
 
     cd ..
     rm -rf gb
