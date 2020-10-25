@@ -207,9 +207,9 @@ of ``nrmake/third_party.mk`` is required. Boilerplate provided.
 
 .. code-block::
 
-    git submodule add -- https://github.com/catchorg/Catch2.git third_party/catch2/2.13.1
-    cd third_party/catch2/2.13.1
-    git checkout v2.13.1
+    git submodule add -- https://github.com/catchorg/Catch2.git third_party/catch2/2.13.2
+    cd third_party/catch2/2.13.2
+    git checkout v2.13.2
     cd -
     vim nrmake/third_party.mk
 
