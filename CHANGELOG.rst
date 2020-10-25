@@ -1,6 +1,7 @@
 2.2.0 - 2020-10-25
 ------------------
 * Improve search for ``Module.mk`` files.
+* Change path to google-benchmark slightly. Improve build instructions.
 
 
 2.1.8 - 2020-10-10
