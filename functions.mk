@@ -165,7 +165,11 @@ get-all-generated = $(foreach name,$(__all_modules),$(__modules.$(name).MODULE_G
 # ----------------------------------------------------------------------
 load-modules =                                                                                \
   $(eval all:)                                                                                \
-  $(foreach mk_include,$(filter-out third_party/%,$(call rwildcard,$(ROOT_DIR),*/Module.mk)), \
+  $(eval src_dirs=$(ROOT_DIR)/benchmark $(ROOT_DIR)/src $(ROOT_DIR)/test)                     \
+  $(foreach sdir,$(src_dirs),                                                                 \
+    $(eval mk_files+=$(call rwildcard,$(sdir),*/Module.mk))                                   \
+  )                                                                                           \
+  $(foreach mk_include,$(mk_files),                                                           \
     $(eval include $(mk_include))                                                             \
     $(clear-vars)                                                                             \
   )
