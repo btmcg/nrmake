@@ -227,7 +227,6 @@ Boilerplate is provided.
     git clone --branch=v1.5.2 --depth=1 https://github.com/google/benchmark.git gb
     cd gb
     cmake \
-        -DBENCHMARK_ENABLE_GTEST_TESTS=BOOL=OFF \
         -DBENCHMARK_ENABLE_LTO:BOOL=ON \
         -DBENCHMARK_ENABLE_TESTING:BOOL=OFF \
         -DCMAKE_BUILD_TYPE:STRING=RELEASE \
@@ -242,7 +241,6 @@ Boilerplate is provided.
     rm -rf build
 
     cmake \
-        -DBENCHMARK_ENABLE_GTEST_TESTS=BOOL=OFF \
         -DBENCHMARK_ENABLE_LTO:BOOL=ON \
         -DBENCHMARK_ENABLE_TESTING:BOOL=OFF \
         -DBENCHMARK_USE_LIBCXX:BOOL=ON \
