@@ -234,11 +234,11 @@ Boilerplate is provided.
         -DCMAKE_INSTALL_PREFIX:PATH=../../third_party/google-benchmark/gcc-10.2.0/1.5.2 \
         -DGCC_AR:STRING=gcc-ar \
         -DGCC_RANLIB:STRING=gcc-ranlib \
-        -S . -B "build"
-    cmake --build "build" --config Release --target install --parallel
+        -S . -B _build
+    cmake --build _build --config Release --target install --parallel
 
     # now build with clang
-    rm -rf build
+    rm -rf _build
 
     cmake \
         -DBENCHMARK_ENABLE_LTO:BOOL=ON \
@@ -250,8 +250,8 @@ Boilerplate is provided.
         -DLLVMAR_EXECUTABLE:STRING=llvm-ar \
         -DLLVMNM_EXECUTABLE:STRING=llvm-nm \
         -DLLVMRANLIB_EXECUTABLE:STRING=llvm-ranlib \
-        -S . -B "build"
-    cmake --build "build" --config Release --target install --parallel
+        -S . -B _build
+    cmake --build _build --config Release --target install --parallel
 
     cd ..
     rm -rf gb
