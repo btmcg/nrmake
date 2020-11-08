@@ -1,3 +1,9 @@
+2.2.1 - 2020-11-08
+------------------
+* Use gold linker in gcc by default
+* Add ``-fuse-linker-plugin`` and speed up lto with ``-flto=jobserver``
+
+
 2.2.0 - 2020-10-25
 ------------------
 * Improve search for ``Module.mk`` files.

@@ -15,7 +15,7 @@ CXX := g++
 
 # optimization flags
 ifndef DEBUG
-  OPTFLAGS += -flto -ffat-lto-objects
+  OPTFLAGS += -flto=jobserver -ffat-lto-objects -fuse-linker-plugin
 
   ifdef PGO_GEN
     OPTFLAGS += -fprofile-generate
@@ -37,3 +37,6 @@ CC_WARN +=
 CXX_WARN +=               \
   -Wsuggest-override      \
   -Wuseless-cast
+
+# use the gold linker
+CPPFLAGS += -fuse-ld=gold
