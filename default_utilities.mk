@@ -4,8 +4,8 @@
 
 # CC and CXX should be set in the env_gcc.mk and env_clang.mk files.
 
-AR ?= ar
-ARFLAGS ?= rcsv
+AR := ar
+ARFLAGS := rcsv
 
 DOXYGEN ?= doxygen
 DOXYGENFLAGS ?=
