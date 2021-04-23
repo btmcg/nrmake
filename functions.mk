@@ -502,8 +502,10 @@ cmd-build-c-executable =           \
   $(LDFLAGS)                       \
   $(__modules.$1.MODULE_LDFLAGS)   \
   $(TARGET_ARCH)                   \
+  -Wl,--start-group                \
   $(LDLIBS)                        \
   $(__modules.$1.MODULE_LDLIBS)    \
+  -Wl,--end-group                  \
   -o $(__modules.$1.MODULE_TARGET)
 
 
@@ -524,8 +526,10 @@ cmd-build-c-shared-library =             \
   $(LDFLAGS)                             \
   $(__modules.$1.MODULE_LDFLAGS) -shared \
   $(TARGET_ARCH)                         \
+  -Wl,--start-group                      \
   $(LDLIBS)                              \
   $(__modules.$1.MODULE_LDLIBS)          \
+  -Wl,--end-group                        \
   -o $(__modules.$1.MODULE_TARGET)
 
 
@@ -546,8 +550,10 @@ cmd-build-cpp-executable =         \
   $(LDFLAGS)                       \
   $(__modules.$1.MODULE_LDFLAGS)   \
   $(TARGET_ARCH)                   \
+  -Wl,--start-group                \
   $(LDLIBS)                        \
   $(__modules.$1.MODULE_LDLIBS)    \
+  -Wl,--end-group                  \
   -o $(__modules.$1.MODULE_TARGET)
 
 
@@ -560,6 +566,7 @@ cmd-build-cpp-executable =         \
 # ----------------------------------------------------------------------
 cmd-build-cpp-shared-library =           \
   $(CXX)                                 \
+  -Wl,--start-group                      \
   $(__modules.$1.MODULE_OBJS)            \
   $(CPPFLAGS)                            \
   $(__modules.$1.MODULE_CPPFLAGS)        \
@@ -568,8 +575,10 @@ cmd-build-cpp-shared-library =           \
   $(LDFLAGS)                             \
   $(__modules.$1.MODULE_LDFLAGS) -shared \
   $(TARGET_ARCH)                         \
+  -Wl,--start-group                      \
   $(LDLIBS)                              \
   $(__modules.$1.MODULE_LDLIBS)          \
+  -Wl,--end-group                        \
   -o $(__modules.$1.MODULE_TARGET)
 
 
