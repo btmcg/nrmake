@@ -114,13 +114,8 @@ compile_commands.json:
 	make COMPILER=clang --always-make --dry-run --jobs | grep --extended-regexp --word-regexp 'clang\+\+' | grep --word-regexp '\c' | jq --null-input --raw-input '[inputs|{directory:".", command:., file: match(" [^ ]+$$").string[1:]}]' > compile_commands.json
 
 ## tidy  run clang-tidy on all c and cpp files in tree
-tidy:
-	$(run-clang-tidy)
-
-## tidy-fix  run clang-tidy on all c and cpp files in tree (and apply fixes)
-tidy-fix:
-	$(eval TIDYFLAGS += -fix-errors)
-	$(run-clang-tidy)
+tidy: compile_commands.json
+	/usr/share/clang/run-clang-tidy.py -quiet -clang-tidy-binary $(TIDY)
 
 ## list-modules  list all known modules in dependency tree
 list-modules:

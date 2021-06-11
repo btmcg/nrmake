@@ -595,38 +595,6 @@ cmd-build-static-library =      \
 
 
 # ----------------------------------------------------------------------
-# function : run-clang-tidy
-# arguments: none
-# returns  : nothing
-# rationale: calls the clang-tidy command on every available module
-# usage    : $(run-clang-tidy)
-# ----------------------------------------------------------------------
-run-clang-tidy =                                                              \
-  $(foreach name,$(filter-out benchmark-runner test-runner,$(__all_modules)), \
-    $(if $(filter %.cpp,$(__modules.$(name).MODULE_SOURCE_FILES)),            \
-      $(call cmd-clang-tidy,$(name))                                          \
-      $(\n)                                                                   \
-    )\
-  )
-
-
-# ----------------------------------------------------------------------
-# function : cmd-clang-tidy
-# arguments: 1: module name
-# returns  : full command to execute clang-tidy on a module's source
-# usage    : $(call cmd-clang-tidy,<module_name>)
-# ----------------------------------------------------------------------
-cmd-clang-tidy =                      \
-  $(TIDY) $(TIDYFLAGS)                \
-  $(__modules.$1.MODULE_SOURCE_FILES) \
-  --                                  \
-  $(CPPFLAGS)                         \
-  $(__modules.$1.MODULE_CPPFLAGS)     \
-  $(CXXFLAGS)                         \
-  $(__modules.$1.MODULE_CXXFLAGS)
-
-
-# ----------------------------------------------------------------------
 # function : make-dist
 # arguments: none
 # returns  : nothing
