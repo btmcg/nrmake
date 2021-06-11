@@ -72,6 +72,14 @@ distclean: genclean clean
 		$(RM) $(LIB_DIR)/* && $(RMDIR) $(LIB_DIR) \
 	)
 
+## format-check  return error if code is not properly formatted
+# use find piped to xargs for speed and to propagate clang-format return
+# value
+format-check:
+	@[ ! -d src       ] || find -O3 src       -type f -regex ".*\.[ch]\(pp\)?$$" -print0 | xargs -0 $(FORMAT) --dry-run -Werror
+	@[ ! -d test      ] || find -O3 test      -type f -regex ".*\.[ch]\(pp\)?$$" -print0 | xargs -0 $(FORMAT) --dry-run -Werror
+	@[ ! -d benchmark ] || find -O3 benchmark -type f -regex ".*\.[ch]\(pp\)?$$" -print0 | xargs -0 $(FORMAT) --dry-run -Werror
+
 ## format  run clang-format on all c and cpp files in tree
 format:
 	@[ ! -d src       ] || find -O3 src       -type f -regex ".*\.[ch]\(pp\)?$$" -exec $(FORMAT) $(FORMATFLAGS) {} \;
