@@ -71,6 +71,9 @@ distclean: genclean clean
 	$(if $(wildcard $(LIB_DIR)),                  \
 		$(RM) $(LIB_DIR)/* && $(RMDIR) $(LIB_DIR) \
 	)
+	$(if $(wildcard compile_commands.json), \
+		$(RM) compile_commands.json         \
+	)
 
 ## format-check  return error if code is not properly formatted
 # use find piped to xargs for speed and to propagate clang-format return
@@ -106,6 +109,9 @@ benchmark: benchmark-runner
 ## test  build test-runner and execute it
 test: test-runner
 	./bin/$^
+
+compile_commands.json:
+	make COMPILER=clang --always-make --dry-run --jobs | grep --extended-regexp --word-regexp 'clang\+\+' | grep --word-regexp '\c' | jq --null-input --raw-input '[inputs|{directory:".", command:., file: match(" [^ ]+$$").string[1:]}]' > compile_commands.json
 
 ## tidy  run clang-tidy on all c and cpp files in tree
 tidy:
