@@ -81,10 +81,11 @@ format-check:
 	@[ ! -d benchmark ] || find -O3 benchmark -type f -regex ".*\.[ch]\(pp\)?$$" -print0 | xargs -0 $(FORMAT) --dry-run -Werror
 
 ## format  run clang-format on all c and cpp files in tree
+# use find piped to xargs for speed
 format:
-	@[ ! -d src       ] || find -O3 src       -type f -regex ".*\.[ch]\(pp\)?$$" -exec $(FORMAT) $(FORMATFLAGS) {} \;
-	@[ ! -d test      ] || find -O3 test      -type f -regex ".*\.[ch]\(pp\)?$$" -exec $(FORMAT) $(FORMATFLAGS) {} \;
-	@[ ! -d benchmark ] || find -O3 benchmark -type f -regex ".*\.[ch]\(pp\)?$$" -exec $(FORMAT) $(FORMATFLAGS) {} \;
+	@[ ! -d src       ] || find -O3 src       -type f -regex ".*\.[ch]\(pp\)?$$" -print0 | xargs -0 $(FORMAT) $(FORMATFLAGS)
+	@[ ! -d test      ] || find -O3 test      -type f -regex ".*\.[ch]\(pp\)?$$" -print0 | xargs -0 $(FORMAT) $(FORMATFLAGS)
+	@[ ! -d benchmark ] || find -O3 benchmark -type f -regex ".*\.[ch]\(pp\)?$$" -print0 | xargs -0 $(FORMAT) $(FORMATFLAGS)
 
 ## help  show this message and exit
 help: $(firstword $(MAKEFILE_LIST))
