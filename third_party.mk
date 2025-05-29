@@ -6,16 +6,16 @@
 # third party libs
 # ----------------------------------------------------------------------
 
-CATCH := third_party/catch2/2.13.2/single_include
+CATCH := third_party/catch2/2.13.10/single_include
 use-catch = $(eval MODULE_CPPFLAGS += -isystem$(CATCH))
 
 FMT := third_party/fmt/7.1.0
 use-fmt = $(eval MODULE_CPPFLAGS += -DFMT_HEADER_ONLY -isystem$(FMT)/include)
 
 ifeq ($(COMPILER),gcc)
-  GOOGLE_BENCHMARK := third_party/google-benchmark/gcc-10.2.0/1.5.2
+  GOOGLE_BENCHMARK := third_party/google-benchmark-gcc/1.9.4
 else
-  GOOGLE_BENCHMARK := third_party/google-benchmark/clang-11.1.0/1.5.2
+  GOOGLE_BENCHMARK := third_party/google-benchmark-clang/1.9.4
 endif
 use-google-benchmark =                                                                       \
   $(eval MODULE_CPPFLAGS += -isystem$(GOOGLE_BENCHMARK)/include)                             \
