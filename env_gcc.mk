@@ -15,7 +15,7 @@ CXX := g++
 
 # optimization flags
 ifndef DEBUG
-  OPTFLAGS += -flto=jobserver -ffat-lto-objects -fuse-linker-plugin
+  OPTFLAGS += -flto=auto -ffat-lto-objects -fuse-linker-plugin
 
   ifdef PGO_GEN
     OPTFLAGS += -fprofile-generate
